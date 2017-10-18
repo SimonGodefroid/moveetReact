@@ -1,21 +1,21 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var compression = require('compression');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
-var dotenv = require('dotenv');
-var React = require('react');
-var ReactDOM = require('react-dom/server');
-var Router = require('react-router');
-var Provider = require('react-redux').Provider;
-var mongoose = require('mongoose');
-var jwt = require('jsonwebtoken');
-var moment = require('moment');
-var request = require('request');
-var webpack = require('webpack');
-var config = require('./webpack.config');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const compression = require('compression');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const dotenv = require('dotenv');
+const React = require('react');
+const ReactDOM = require('react-dom/server');
+const Router = require('react-router');
+const Provider = require('react-redux').Provider;
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
+const request = require('request');
+const webpack = require('webpack');
+const config = require('./webpack.config');
 
 // Load environment variables from .env file
 dotenv.load();
@@ -25,20 +25,12 @@ require('babel-core/register');
 require('babel-polyfill');
 
 // Models
-var User = require('./models/User');
-var Offer = require('./models/Offer');
-var Company = require('./models/Company');
-var Candidate = require('./models/Candidate');
-// 
-
-
-
-
-
+const User = require('./models/User');
+//
 
 // Controllers
-var userController = require('./controllers/user');
-var contactController = require('./controllers/contact');
+const userController = require('./controllers/user');
+const contactController = require('./controllers/contact');
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');
@@ -50,8 +42,8 @@ var compiler = webpack(config);
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
-  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
+	console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
+	process.exit(1);
 });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -65,32 +57,34 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  req.isAuthenticated = function() {
-    var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
-    try {
-      return jwt.verify(token, process.env.TOKEN_SECRET);
-    } catch (err) {
-      return false;
-    }
-  };
+	req.isAuthenticated = function() {
+		var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
+		try {
+			return jwt.verify(token, process.env.TOKEN_SECRET);
+		} catch (err) {
+			return false;
+		}
+	};
 
-  if (req.isAuthenticated()) {
-    var payload = req.isAuthenticated();
-    User.findById(payload.sub, function(err, user) {
-      req.user = user;
-      next();
-    });
-  } else {
-    next();
-  }
+	if (req.isAuthenticated()) {
+		var payload = req.isAuthenticated();
+		User.findById(payload.sub, function(err, user) {
+			req.user = user;
+			next();
+		});
+	} else {
+		next();
+	}
 });
 
 if (app.get('env') === 'development') {
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-  }));
-  app.use(require('webpack-hot-middleware')(compiler));
+	app.use(
+		require('webpack-dev-middleware')(compiler, {
+			noInfo: true,
+			publicPath: config.output.publicPath
+		})
+	);
+	app.use(require('webpack-hot-middleware')(compiler));
 }
 
 app.post('/contact', contactController.contactPost);
@@ -106,58 +100,45 @@ app.get('/auth/facebook/callback', userController.authFacebookCallback);
 app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
 
-
-// Routes
-// app.use("/api/users", usersRoutes);
-// app.use("/api/offers", offersRoutes);
-// app.use("/api/candidates", candidatesRoutes);
-// app.use("/api/companies", companiesRoutes);
-
-// Les routes sont séparées dans plusieurs fichiers (routes pluriel lowercase)
-// var usersRoutes = require("./routes/users.js");
-// var interimsRoutes = require("./routes/interims.js");
-// var clientsRoutes = require("./routes/clients.js");
-
-
 // React server rendering
 app.use(function(req, res) {
-  var initialState = {
-    auth: { token: req.cookies.token, user: req.user },
-    messages: {}
-  };
+	var initialState = {
+		auth: { token: req.cookies.token, user: req.user },
+		messages: {}
+	};
 
-  var store = configureStore(initialState);
+	var store = configureStore(initialState);
 
-  Router.match({ routes: routes.default(store), location: req.url }, function(err, redirectLocation, renderProps) {
-    if (err) {
-      res.status(500).send(err.message);
-    } else if (redirectLocation) {
-      res.status(302).redirect(redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      var html = ReactDOM.renderToString(React.createElement(Provider, { store: store },
-        React.createElement(Router.RouterContext, renderProps)
-      ));
-      res.render('layout', {
-        html: html,
-        initialState: store.getState()
-      });
-    } else {
-      res.sendStatus(404);
-    }
-  });
+	Router.match({ routes: routes.default(store), location: req.url }, function(err, redirectLocation, renderProps) {
+		if (err) {
+			res.status(500).send(err.message);
+		} else if (redirectLocation) {
+			res.status(302).redirect(redirectLocation.pathname + redirectLocation.search);
+		} else if (renderProps) {
+			var html = ReactDOM.renderToString(
+				React.createElement(Provider, { store: store }, React.createElement(Router.RouterContext, renderProps))
+			);
+			res.render('layout', {
+				html: html,
+				initialState: store.getState()
+			});
+		} else {
+			res.sendStatus(404);
+		}
+	});
 });
 
 // Production error handler
 if (app.get('env') === 'production') {
-  app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.sendStatus(err.status || 500);
-  });
+	app.use(function(err, req, res, next) {
+		console.error(err.stack);
+		res.sendStatus(err.status || 500);
+	});
 }
 
 // server log
 app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening on port ' + app.get('port'));
 });
 // end of server log
 module.exports = app;

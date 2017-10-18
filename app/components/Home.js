@@ -1,7 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Messages from './Messages';
 import Gallery from './Gallery';
+import Landing from './Landing';
 
 //<Link to={`/room/${this.props.roomid}`}>
 
@@ -9,29 +10,28 @@ import Gallery from './Gallery';
 // <Route path="room/:id" component={RoomContainer} />
 
 class Home extends React.Component {
-  render() {
-    return (
-      <div
-        className="container-fluid"
-        style={{
-          marginTop: 55,
-          backgroundColor: 'black',
-        }}
-      >
-        <Messages messages={this.props.messages} />
-        <div className="row">
-          <div style={{textAlign: 'center', fontSize: 50}}>MOVEET</div>
-          <Gallery />
-        </div>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div
+				className="container-fluid"
+				style={{
+					marginTop: 55,
+					backgroundColor: ''
+				}}
+			>
+				<Messages messages={this.props.messages} />
+				<div className="row">
+					<Landing />
+				</div>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = state => {
-  return {
-    messages: state.messages,
-  };
+	return {
+		messages: state.messages
+	};
 };
 
 export default connect(mapStateToProps)(Home);
