@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Poster from './Movies/Poster';
 import InfiniteScroll from 'react-infinite-scroller';
+import MDSpinner from 'react-md-spinner';
 import AnimakitExpander from 'animakit-expander';
 
 class Movies extends Component {
@@ -20,10 +21,10 @@ class Movies extends Component {
 	renderCasting(movie) {
 		if (movie.castingShort) {
 			return (
-				<p>
-					Acteurs: {movie.castingShort['actors']} <br />
-					Réalisateur: {movie.castingShort['directors']}
-				</p>
+				<div>
+					<p>Acteurs: {movie.castingShort['actors']}</p>
+					<p>Réalisateur: {movie.castingShort['directors']}</p>
+				</div>
 			);
 		}
 	}
@@ -49,27 +50,21 @@ class Movies extends Component {
 						}}
 					>
 						<Poster url={movie.posterPath} />
-						<p style={{ position: 'absolute', top: '1em', left: '15vw' }}>
+						<p style={{ position: 'absolute', top: '0.5em', left: '15vw', fontSize: '1.5em' }}>
 							{movie.originalTitle} - {this.renderDate(movie)}
 						</p>
-						<p style={{ position: 'absolute', top: '3em', left: '15vw', width: '40vw' }}>
+						<p style={{ position: 'absolute', top: '3em', left: '15vw', width: '50vw' }}>
 							{this.renderCasting(movie)}
 						</p>
-						<p style={{ position: 'absolute', top: '7em', left: '15vw', width: '50vw' }}>
-							{movie.synopsis.substring(0, 255)}
+						<p style={{ position: 'absolute', top: '9em', left: '15vw', width: '50vw' }}>
+							{`${movie.synopsis.substring(0, 255)}...`}
 						</p>
 
-						<button
-							className="btn btn-success"
-							style={{ margin: '0 1em', position: 'absolute', top: '12em' }}
-						>
-							Bande Annonce
-						</button>
 						<div
 							style={{
 								position: 'absolute',
-								top: '5em',
-								right: '0',
+								top: '2em',
+								right: '-2em',
 								alignItems: 'center',
 								display: 'inline',
 								width: '20em'
@@ -88,7 +83,7 @@ class Movies extends Component {
 								<i className="fa fa-search" aria-hidden="true" /> Buddy Finder
 							</button>
 							<button
-								className="btn"
+								className={`btn ${css(styles.hoverButton)}`}
 								style={{
 									width: '15em',
 									marginTop: '0.5em',
@@ -100,7 +95,7 @@ class Movies extends Component {
 								<i className="fa fa-plus" aria-hidden="true" /> Watchlist
 							</button>
 							<button
-								className="btn"
+								className={`btn ${css(styles.hoverButton)}`}
 								style={{
 									width: '15em',
 									marginTop: '0.5em',
@@ -110,6 +105,18 @@ class Movies extends Component {
 								}}
 							>
 								<i className="fa fa-clock-o" aria-hidden="true" /> Séances
+							</button>
+							<button
+								className={`btn ${css(styles.hoverButton)}`}
+								style={{
+									width: '15em',
+									marginTop: '0.5em',
+									backgroundColor: 'black',
+									color: 'white',
+									borderRadius: '15em'
+								}}
+							>
+								<i className="fa fa-clock-o" aria-hidden="true" /> Bande Annonce
 							</button>
 						</div>
 					</div>
@@ -121,7 +128,7 @@ class Movies extends Component {
 
 	render() {
 		if (!this.props.movies) {
-			return <div>Loading...</div>;
+			return <MDSpinner size={100} />;
 		}
 		return (
 			<div>
@@ -129,6 +136,7 @@ class Movies extends Component {
 				<AnimakitExpander expanded={this.state.expanded} duration={200}>
 					<div>Coucou</div>
 				</AnimakitExpander>
+
 				{this.renderMovies(this.props.movies)}
 			</div>
 		);

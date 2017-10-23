@@ -12,6 +12,9 @@ import Reset from './components/Account/Reset';
 import Movies from './components/Movies';
 import Landing from './components/Landing';
 import Buddies from './components/Buddies';
+import Theaters from './components/Theaters';
+import Events from './components/Events';
+import Chat from './components/Chat';
 
 export default function getRoutes(store) {
 	const ensureAuthenticated = (nextState, replace) => {
@@ -34,6 +37,9 @@ export default function getRoutes(store) {
 			<IndexRoute component={Home} onLeave={clearMessages} />
 			<Route path="/landing" component={Landing} onLeave={clearMessages} />
 			<Route path="/buddies" component={Buddies} onLeave={clearMessages} />
+			<Route path="/theaters" component={Theaters} onLeave={clearMessages} />
+			<Route path="/events" component={Events} onLeave={clearMessages} />
+			<Route path="/chat" component={Chat} onLeave={clearMessages} />
 			<Route path="/contact" component={Contact} onLeave={clearMessages} />
 			<Route path="/login" component={Login} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
 			<Route path="/signup" component={Signup} onEnter={skipIfAuthenticated} onLeave={clearMessages} />

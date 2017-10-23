@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MDSpinner from 'react-md-spinner';
 // import { connect } from 'react-redux';
 // import of the action
 // import { getMoviesByGenre } from '../actions/movie';
@@ -17,6 +18,7 @@ class Landing extends Component {
 			movies: [],
 			genre: '2'
 		};
+		this.fetchGenre = this.fetchGenre.bind(this);
 	}
 
 	componentDidMount() {
@@ -26,7 +28,12 @@ class Landing extends Component {
 		}, this.state.genre);
 		console.log('this.state', this.state);
 	}
-
+	fetchGenre(genre) {
+		Api.getMoviesByGenre(json => {
+			this.setState({ movies: json.message });
+		}, genre);
+		console.log('this.state', this.state);
+	}
 	onBeforeChange(selectedIndex, $selectedPanel, $selectedTabMenu) {
 		console.log('before the tab ' + selectedIndex);
 	}
@@ -47,6 +54,9 @@ class Landing extends Component {
 						<div style={{ height: '100vh' }}>
 							{console.log('this.state', this.state)}
 							<div style={{ margin: 0, color: 'black' }}>
+								<p onClick={() => this.fetchGenre(2)}>click me for Action</p>
+								<p onClick={() => this.fetchGenre(3)}>click me for Drama</p>
+								<p onClick={() => this.fetchGenre(4)}>click me for Comedy</p>
 								<Movies movies={this.state.movies} />
 							</div>
 						</div>
@@ -56,7 +66,9 @@ class Landing extends Component {
 		} else {
 			return (
 				<div style={{ height: '100vh' }}>
-					<p>Loading movies</p>
+					<div>
+						<MDSpinner size={100} />
+					</div>
 				</div>
 			);
 		}

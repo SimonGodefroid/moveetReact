@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Poster from './Movies/Poster.js';
 import Api from '../Api.js';
 import ReactTooltip from 'react-tooltip';
+import MDSpinner from 'react-md-spinner';
 
 export default class Buddies extends Component {
 	constructor(props) {
@@ -100,8 +101,8 @@ export default class Buddies extends Component {
 										width: '15em',
 										backgroundColor: 'black',
 										color: 'white',
-										// textAlign: 'justify',
-										borderRadius: '15em'
+										borderRadius: '15em',
+										border: 'black 0.2em solid'
 									}}
 								>
 									<i className="fa fa-comment" aria-hidden="true" /> Chatter avec{' '}
@@ -113,9 +114,9 @@ export default class Buddies extends Component {
 										width: '15em',
 										borderRadius: '15em',
 										marginTop: '0.5em',
-										// textAlign: 'justify',
 										backgroundColor: 'rgba(100,255,200,0.9)',
-										color: 'white'
+										color: 'white',
+										border: 'rgba(100,255,200,0.9) 0.2em solid'
 									}}
 								>
 									<i className="fa fa-clock-o" aria-hidden="true" /> Proposer une séance
@@ -127,7 +128,8 @@ export default class Buddies extends Component {
 										width: '15em',
 										borderRadius: '15em',
 										backgroundColor: 'pink',
-										color: 'white'
+										color: 'white',
+										border: 'pink 0.2em solid'
 									}}
 								>
 									<i className="fa fa-ticket" aria-hidden="true" /> Proposer un film
@@ -167,7 +169,7 @@ export default class Buddies extends Component {
 		} else {
 			return (
 				<div style={{ height: '100vh' }}>
-					<p>Loading buddies</p>
+					<MDSpinner size={100} />
 				</div>
 			);
 		}
@@ -195,6 +197,7 @@ const styles = StyleSheet.create({
 			// transition: 'all .3s ease-in-out',
 			// transform: 'scale(1.009)'
 			backgroundColor: 'white',
+			border: '0.2em black solid',
 			color: 'black'
 		}
 	},

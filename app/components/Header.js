@@ -88,12 +88,12 @@ class Header extends React.Component {
 								</IndexLink>
 							</li>
 							<li>
-								<Link to="/contact" activeStyle={active}>
+								<Link to="/theaters" activeStyle={active}>
 									SALLES
 								</Link>
 							</li>
 							<li>
-								<Link to="/contact" activeStyle={active}>
+								<Link to="/events" activeStyle={active}>
 									EVENEMENTS
 								</Link>
 							</li>
@@ -103,7 +103,7 @@ class Header extends React.Component {
 								</Link>
 							</li>
 							<li>
-								<Link to="/other" activeStyle={active}>
+								<Link to="/chat" activeStyle={active}>
 									CHAT
 								</Link>
 							</li>
