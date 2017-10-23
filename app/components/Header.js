@@ -83,7 +83,7 @@ class Header extends React.Component {
 							}}
 						>
 							<li>
-								<IndexLink to="/" activeStyle={active}>
+								<IndexLink to="/movies" activeStyle={active}>
 									FILMS
 								</IndexLink>
 							</li>

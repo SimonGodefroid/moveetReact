@@ -23,17 +23,8 @@ class Landing extends Component {
 
 	componentDidMount() {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
-		Api.getMoviesByGenre(json => {
-			this.setState({ movies: json.message });
-		}, this.state.genre);
-		console.log('this.state', this.state);
 	}
-	fetchGenre(genre) {
-		Api.getMoviesByGenre(json => {
-			this.setState({ movies: json.message });
-		}, genre);
-		console.log('this.state', this.state);
-	}
+
 	onBeforeChange(selectedIndex, $selectedPanel, $selectedTabMenu) {
 		console.log('before the tab ' + selectedIndex);
 	}

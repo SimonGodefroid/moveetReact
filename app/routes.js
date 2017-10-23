@@ -35,7 +35,7 @@ export default function getRoutes(store) {
 	return (
 		<Route path="/" component={App}>
 			<IndexRoute component={Home} onLeave={clearMessages} />
-			<Route path="/landing" component={Landing} onLeave={clearMessages} />
+			<Route path="/movies" component={Movies} onLeave={clearMessages} />
 			<Route path="/buddies" component={Buddies} onLeave={clearMessages} />
 			<Route path="/theaters" component={Theaters} onLeave={clearMessages} />
 			<Route path="/events" component={Events} onLeave={clearMessages} />
