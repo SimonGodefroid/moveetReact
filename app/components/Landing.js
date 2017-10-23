@@ -22,7 +22,7 @@ class Landing extends Component {
 	componentDidMount() {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
 		Api.getMoviesByGenre(json => {
-			this.setState({ movies: json.movies });
+			this.setState({ movies: json.message });
 		}, this.state.genre);
 		console.log('this.state', this.state);
 	}

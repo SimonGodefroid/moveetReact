@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import Poster from './Movies/Poster';
 import InfiniteScroll from 'react-infinite-scroller';
 import AnimakitExpander from 'animakit-expander';
 
 class Movies extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			expanded: false
+		};
+		this.toggle = this.toggle.bind(this);
+	}
 	componentDidMount() {}
-
+	toggle() {
+		console.log('coucou', this.state);
+		this.setState({ expanded: !this.state.expanded });
+	}
 	renderCasting(movie) {
 		if (movie.castingShort) {
 			return (
@@ -41,32 +52,63 @@ class Movies extends Component {
 						<p style={{ position: 'absolute', top: '1em', left: '15vw' }}>
 							{movie.originalTitle} - {this.renderDate(movie)}
 						</p>
-						<p style={{ position: 'absolute', top: '3em', left: '15vw' }}>
-							{movie.synopsis.substring(0, 255)}
-						</p>
-						<p style={{ position: 'absolute', top: '10em', left: '15vw', width: '15vw' }}>
+						<p style={{ position: 'absolute', top: '3em', left: '15vw', width: '40vw' }}>
 							{this.renderCasting(movie)}
 						</p>
-						<button className="btn btn-success" style={{ margin: '0 1em' }}>
+						<p style={{ position: 'absolute', top: '7em', left: '15vw', width: '50vw' }}>
+							{movie.synopsis.substring(0, 255)}
+						</p>
+
+						<button
+							className="btn btn-success"
+							style={{ margin: '0 1em', position: 'absolute', top: '12em' }}
+						>
 							Bande Annonce
 						</button>
 						<div
 							style={{
 								position: 'absolute',
-								top: '8em',
-								right: '2em',
+								top: '5em',
+								right: '0',
 								alignItems: 'center',
 								display: 'inline',
-								width: '30em'
+								width: '20em'
 							}}
 						>
-							<button className="btn btn-success" style={{ width: '10vw' }}>
-								Buddy Finder
+							<button
+								className={`btn ${css(styles.hoverButton)}`}
+								style={{
+									width: '15em',
+									marginTop: '0.5em',
+									backgroundColor: 'black',
+									color: 'white',
+									borderRadius: '15em'
+								}}
+							>
+								<i className="fa fa-search" aria-hidden="true" /> Buddy Finder
 							</button>
-							<button className="btn btn-warning" style={{ width: '10vw' }}>
-								+ Watchlist
+							<button
+								className="btn"
+								style={{
+									width: '15em',
+									marginTop: '0.5em',
+									backgroundColor: 'black',
+									color: 'white',
+									borderRadius: '15em'
+								}}
+							>
+								<i className="fa fa-plus" aria-hidden="true" /> Watchlist
 							</button>
-							<button className="btn btn-danger" style={{ width: '10vw' }}>
+							<button
+								className="btn"
+								style={{
+									width: '15em',
+									marginTop: '0.5em',
+									backgroundColor: 'black',
+									color: 'white',
+									borderRadius: '15em'
+								}}
+							>
 								<i className="fa fa-clock-o" aria-hidden="true" /> Séances
 							</button>
 						</div>
@@ -81,8 +123,25 @@ class Movies extends Component {
 		if (!this.props.movies) {
 			return <div>Loading...</div>;
 		}
-		return <div>{this.renderMovies(this.props.movies)}</div>;
+		return (
+			<div>
+				<div onClick={() => this.toggle()}>titre</div>
+				<AnimakitExpander expanded={this.state.expanded} duration={200}>
+					<div>Coucou</div>
+				</AnimakitExpander>
+				{this.renderMovies(this.props.movies)}
+			</div>
+		);
 	}
 }
-
+const styles = StyleSheet.create({
+	hoverButton: {
+		':hover': {
+			// transition: 'all .3s ease-in-out',
+			// transform: 'scale(1.009)'
+			backgroundColor: 'white',
+			color: 'black'
+		}
+	}
+});
 export default Movies;

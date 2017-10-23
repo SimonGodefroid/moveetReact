@@ -1,6 +1,7 @@
 class Api {
 	getMoviesByGenre(callback, genre) {
-		fetch('http://moveetservertest.herokuapp.com/api/movies/?genre=' + genre)
+		console.log('https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=' + genre);
+		fetch('https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=' + genre)
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);
@@ -8,7 +9,7 @@ class Api {
 			});
 	}
 	getBuddies(callback) {
-		fetch('http://moveetservertest.herokuapp.com/api/user/all')
+		fetch('https://moveet-api.herokuapp.com/api/v1/users')
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);
