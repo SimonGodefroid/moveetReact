@@ -15,6 +15,7 @@ import Buddies from './components/Buddies';
 import Theaters from './components/Theaters';
 import Events from './components/Events';
 import Chat from './components/Chat';
+import Movie from './components/Movie';
 
 export default function getRoutes(store) {
 	const ensureAuthenticated = (nextState, replace) => {
@@ -46,7 +47,8 @@ export default function getRoutes(store) {
 			<Route path="/account" component={Profile} onEnter={ensureAuthenticated} onLeave={clearMessages} />
 			<Route path="/forgot" component={Forgot} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
 			<Route path="/reset/:token" component={Reset} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
-			<Route path="/movies/:genre" component={Movies} />
+			{/*<Route path="/movies/:genre" component={Movies} />*/}
+			<Route path="/movies/:id(/^[a-f\d]{24}$/i)" component={Movie} />
 			<Route path="*" component={NotFound} onLeave={clearMessages} />
 		</Route>
 	);

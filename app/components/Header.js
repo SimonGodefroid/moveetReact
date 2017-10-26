@@ -10,7 +10,7 @@ class Header extends React.Component {
 	}
 
 	render() {
-		const active = { borderBottomColor: '#3f51b5' };
+		const active = { borderBottom: 'solid 0.02em white', lineHeight: '1em' };
 		const rightNav = this.props.token ? (
 			<ul className="nav navbar-nav navbar-right" style={{ backgroundColor: 'black' }}>
 				<li className="dropdown">
@@ -32,7 +32,7 @@ class Header extends React.Component {
 				</li>
 			</ul>
 		) : (
-			<ul className="nav navbar-nav navbar-right ">
+			<ul className="nav navbar-nav navbar-right " style={{ fontFamily: 'Josefin Sans' }}>
 				<li>
 					<Link to="/login" activeStyle={active}>
 						Log in
@@ -52,7 +52,9 @@ class Header extends React.Component {
 					backgroundColor: 'black',
 					color: 'white',
 					borderWidth: '0 0 4px 0',
-					textAlign: 'center'
+					textAlign: 'center',
+					fontFamily: 'Josefin Sans',
+					fontSize: '1.2em'
 				}}
 			>
 				<div className="container-fluid">

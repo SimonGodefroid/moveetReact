@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MDSpinner from 'react-md-spinner';
 // import { connect } from 'react-redux';
 // import of the action
 // import { getMoviesByGenre } from '../actions/movie';
@@ -9,6 +8,7 @@ import MDSpinner from 'react-md-spinner';
 // import Gallery from './Gallery';
 import Movies from './Movies';
 // import Tabs from 'react-simpletabs';
+import Loader from './Core/Loader';
 import Api from '../Api.js';
 
 class Landing extends Component {
@@ -18,7 +18,7 @@ class Landing extends Component {
 			movies: [],
 			genre: '2'
 		};
-		this.fetchGenre = this.fetchGenre.bind(this);
+		// this.fetchGenre = this.fetchGenre.bind(this);
 	}
 
 	componentDidMount() {
@@ -55,13 +55,7 @@ class Landing extends Component {
 				</div>
 			);
 		} else {
-			return (
-				<div style={{ height: '100vh' }}>
-					<div>
-						<MDSpinner size={100} />
-					</div>
-				</div>
-			);
+			return <Loader />;
 		}
 	}
 }

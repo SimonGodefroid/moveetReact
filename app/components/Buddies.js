@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import ReactTooltip from 'react-tooltip';
-import Poster from './Movies/Poster.js';
-import Button from './Core/Button.js';
-import Loader from './Core/Loader.js';
+import Poster from './Movies/Poster';
+import Button from './Core/Button';
+import Loader from './Core/Loader';
+import ScrollTop from './Core/ScrollTop';
+import Avatar from './User/Avatar';
 import Api from '../Api.js';
 
 export default class Buddies extends Component {
@@ -16,9 +18,9 @@ export default class Buddies extends Component {
 
 	componentDidMount() {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
-		Api.getBuddies(json => {
+		Api.getAllBuddies(json => {
 			this.setState({ buddies: json.message });
-		});
+		}, '59ed03350e23a465a4878559');
 	}
 	renderBuddies(buddies) {
 		const resBuddies = buddies.map((buddy, index) => {
@@ -26,16 +28,20 @@ export default class Buddies extends Component {
 				<div key={index}>
 					<div className={'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
 						<div className={css(styles.buddyCard, styles.hover)}>
-							<Poster
-								style={{ borderRadius: '0.3em' }}
+							<Avatar
+								style={{ borderRadius: '1em' }}
+								height={170}
+								width={150}
 								url={buddy.account.picture || 'http://via.placeholder.com/150x200'}
 							/>
 							<p className={css(styles.buddyTitle)}>
 								{buddy.account.username} - {buddy.account.genre.substring(0, 1)}, {buddy.account.age},{' '}
 								{buddy.account.subscription}
 							</p>
-							<p className={css(styles.buddyBody)}>{buddy.account.description}</p>
-							{/*this.renderFavorites(buddy.account.favorites)*/}
+							<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>
+								{buddy.account.description.substring(0, 80)}
+							</p>
+							{this.renderFavorites(buddy)}
 							<div className={css(styles.buttonsContainer)}>
 								<Button
 									text={'Chatter avec '}
@@ -58,6 +64,7 @@ export default class Buddies extends Component {
 			return (
 				<div key={index}>
 					<a
+						data-for="buddy"
 						data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
 						style={{ position: 'absolute', left: (index + 1) * 45 }}
 					>
@@ -81,37 +88,61 @@ export default class Buddies extends Component {
 		return resBubbles;
 	}
 
-	// renderFavorites(favorites) {
-	// 	const resFavorites = favorites.map((favorite, index) => {
-	// 		return (
-	// 			<div key={index} style={{ height: '10em', margin: '0 0.1em' }}>
-	// 				<img src={favorite.posterPath} style={{ height: '10em' }} />
-	// 			</div>
-	// 		);
-	// 	});
-
-	// 	return (
-	// 		<div style={{ width: '40vw', height: '10em', position: 'absolute', top: '70', left: '400' }}>
-	// 			{resFavorites}
-	// 		</div>
-	// 	);
-	// }
+	renderFavorites(buddy) {
+		const resFavorites = buddy.fiveFavorites.map((favorite, index) => {
+			return (
+				<div key={index}>
+					<a
+						data-for="movie"
+						data-tip={`${favorite.originalTitle}<br />`}
+						style={{ position: 'absolute', top: '18em', left: (index + 1) * 70 }}
+					>
+						<a href={`/movies/${favorite._id}`}>
+							<img
+								key={index}
+								src={favorite.posterPath || 'http://via.placeholder.com/150x200'}
+								width={70}
+								height={100}
+								style={{
+									position: 'absolute',
+									left: 200,
+									bottom: 50,
+									border: 'white 0.2em solid'
+								}}
+							/>
+						</a>
+					</a>
+				</div>
+			);
+		});
+		return resFavorites;
+	}
 
 	render() {
 		if (this.state.buddies.length > 0) {
 			return (
-				<div className="container">
+				<div className="container" style={{ fontFamily: 'Quicksand' }}>
 					<div className="row">
 						<div style={{ height: '100vh', marginTop: 55 }}>{this.renderBuddies(this.state.buddies)}</div>
 					</div>
 					<ReactTooltip
+						id="buddy"
 						offset={{ top: 150, left: -30 }}
 						place="top"
 						type="success"
 						effect="solid"
 						multiline="true"
 					/>
-					<div style={{ margin: '0', color: 'black' }}>{this.renderBubbles(this.state.buddies)}</div>
+					<ReactTooltip
+						id="movie"
+						offset={{ top: 150, left: -235 }}
+						place="top"
+						type="success"
+						effect="solid"
+						multiline="true"
+					/>
+					<div style={{ margin: '0em', color: 'black' }}>{this.renderBubbles(this.state.buddies)}</div>
+					<ScrollTop />
 				</div>
 			);
 		} else {
@@ -124,38 +155,38 @@ const styles = StyleSheet.create({
 	buddyCard: {
 		backgroundColor: 'rgba(100,200,255,0.9)',
 		color: 'black',
+		height: '14em',
 		border: '0.1em black solid',
 		borderRadius: '0.2em',
-		margin: '1em 0',
+		margin: '1em 0em',
 		width: '90vw',
 		padding: '1em'
 	},
 	buddyTitle: {
 		position: 'absolute',
-		top: '2em',
+		top: '1.6em',
 		left: '15vw',
 		fontSize: '1.2em'
 	},
 	buddyBody: {
 		position: 'absolute',
-		top: '4em',
+		top: '3.4em',
 		left: '15vw',
 		fontSize: '1.2em',
-		width: '30vw'
+		width: '50vw',
+		minWidth: '40em'
 	},
 	buttonsContainer: {
 		position: 'absolute',
-		top: '5em',
-		right: '0',
+		top: '3em',
+		right: '-2em',
 		alignItems: 'center',
 		display: 'inline',
 		width: '20em'
 	},
 	hover: {
 		':hover': {
-			// transition: 'all .3s ease-in-out',
-			// transform: 'scale(1.009)',
-			outline: 'solid grey 0.2em',
+			boxShadow: '0 0 1em rgba(255, 203, 238, 1)',
 			borderColor: 'white'
 		}
 	},
@@ -168,11 +199,21 @@ const styles = StyleSheet.create({
 	},
 	hoverButton: {
 		':hover': {
-			// transition: 'all .3s ease-in-out',
-			// transform: 'scale(1.009)'
 			backgroundColor: 'white',
 			border: '0.2em black solid',
 			color: 'black'
 		}
+	},
+	scrollTop: {
+		backgroundColor: 'black',
+		padding: '0.5em',
+		position: 'fixed',
+		fontSize: '1em',
+		bottom: 50,
+		right: 30,
+		cursor: 'pointer',
+		transitionDuration: '0.2s',
+		transitionTimingFunction: 'linear',
+		transitionDelay: '0s'
 	}
 });

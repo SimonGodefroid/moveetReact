@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 	button: {
 		marginTop: '0.5em',
 		width: '15em',
-		borderRadius: '15em',
+		borderRadius: '0.3em',
 		color: 'white'
 	},
 	hoverButton: {

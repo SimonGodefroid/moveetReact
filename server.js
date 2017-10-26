@@ -91,7 +91,7 @@ app.post('/contact', contactController.contactPost);
 // app.put('/account', userController.ensureAuthenticated, userController.accountPut);
 // app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
 app.post('/signup', userController.signupPost);
-// app.post('/login', userController.loginPost);
+app.post('/login', userController.loginPost);
 // app.post('/forgot', userController.forgotPost);
 // app.post('/reset/:token', userController.resetPost);
 // app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
