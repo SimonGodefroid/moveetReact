@@ -16,9 +16,9 @@ const moment = require('moment');
 const request = require('request');
 const webpack = require('webpack');
 const config = require('./webpack.config');
-
-// Load environment variables from .env file
-dotenv.load();
+require('dotenv').config();
+// // Load environment variables from .env file
+// dotenv.load();
 
 // ES6 Transpiler
 require('babel-core/register');
