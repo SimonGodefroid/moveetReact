@@ -18,7 +18,7 @@ const webpack = require('webpack');
 const config = require('./webpack.config');
 // require('dotenv').config();
 // // Load environment variables from .env file
-dotenv.load();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 // ES6 Transpiler
 require('babel-core/register');
