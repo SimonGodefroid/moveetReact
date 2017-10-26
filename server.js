@@ -39,8 +39,7 @@ var configureStore = require('./app/store/configureStore').default;
 var app = express();
 
 var compiler = webpack(config);
-
-mongoose.connect(process.env.MONGODB);
+mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('error', function() {
 	console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
 	process.exit(1);
