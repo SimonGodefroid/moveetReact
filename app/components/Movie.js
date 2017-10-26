@@ -44,7 +44,10 @@ class Movie extends Component {
 			let url = movie.trailerEmbed;
 			let endUrl = url.search('</iframe>');
 			let urlTrailer =
-				url.substring(0, endUrl + 9).replace("<div id='ACEmbed'>", "<div id='blogvision'>") + '</div>';
+				url
+					.substring(0, endUrl + 9)
+					.replace('http:', '')
+					.replace("<div id='ACEmbed'>", "<div id='blogvision'>") + '</div>';
 			return (
 				<div style={{ textAlign: 'center' }}>
 					<div dangerouslySetInnerHTML={{ __html: urlTrailer }} />
