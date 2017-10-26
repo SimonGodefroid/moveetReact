@@ -16,7 +16,7 @@ const moment = require('moment');
 const request = require('request');
 const webpack = require('webpack');
 const config = require('./webpack.config');
-require('dotenv').config();
+
 // // Load environment variables from .env file
 // dotenv.load();
 
@@ -39,7 +39,7 @@ var configureStore = require('./app/store/configureStore').default;
 var app = express();
 
 var compiler = webpack(config);
-
+require('dotenv').config();
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
 	console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
