@@ -33,8 +33,8 @@ const userController = require('./controllers/user');
 const contactController = require('./controllers/contact');
 
 // React and Server-Side Rendering
-var routes = require('./app/routes');
-var configureStore = require('./app/store/configureStore').default;
+const routes = require('./app/routes');
+const configureStore = require('./app/store/configureStore').default;
 
 var app = express();
 
