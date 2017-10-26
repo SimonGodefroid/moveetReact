@@ -16,7 +16,7 @@ const moment = require('moment');
 const request = require('request');
 const webpack = require('webpack');
 const config = require('./webpack.config');
-require('dotenv').config();
+// require('dotenv').config();
 // // Load environment variables from .env file
 // dotenv.load();
 
