@@ -9,6 +9,7 @@ const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 const React = require('react');
 const ReactDOM = require('react-dom/server');
+const StyleSheetServer = require('aphrodite').StyleSheetServer;
 const Router = require('react-router');
 const Provider = require('react-redux').Provider;
 const mongoose = require('mongoose');
@@ -115,11 +116,22 @@ app.use(function(req, res) {
 		} else if (redirectLocation) {
 			res.status(302).redirect(redirectLocation.pathname + redirectLocation.search);
 		} else if (renderProps) {
-			var html = ReactDOM.renderToString(
-				React.createElement(Provider, { store: store }, React.createElement(Router.RouterContext, renderProps))
-			);
+			var { html, css } = StyleSheetServer.renderStatic(() => {
+				return ReactDOM.renderToString(
+					React.createElement(
+						Provider,
+						{ store: store },
+						React.createElement(Router.RouterContext, renderProps)
+					)
+				);
+			});
+
+			// var html = ReactDOM.renderToString(
+			// 	React.createElement(Provider, { store: store }, React.createElement(Router.RouterContext, renderProps))
+			// );
 			res.render('layout', {
 				html: html,
+				css: css,
 				initialState: store.getState()
 			});
 		} else {

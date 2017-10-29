@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+const styles = StyleSheet.create({
+	tag: {
+		color: 'white',
+		backgroundColor: 'grey',
+		padding: '0.2em 0.4em',
+		margin: '0 0.3em 0 0',
+		borderRadius: '2em',
+		border: '0.1em grey solid'
+	},
+	hoverTag: {
+		':hover': {
+			color: 'grey',
+			backgroundColor: 'white',
+			border: '0.1em grey white',
+			cursor: 'pointer'
+		}
+	}
+});
+
 class Tag extends Component {
 	constructor(props) {
 		super(props);
@@ -22,22 +41,5 @@ class Tag extends Component {
 		);
 	}
 }
-const styles = StyleSheet.create({
-	tag: {
-		color: 'white',
-		backgroundColor: 'grey',
-		padding: '0.2em 0.4em',
-		margin: '0 0.3em 0 0',
-		borderRadius: '2em',
-		border: '0.1em grey solid'
-	},
-	hoverTag: {
-		':hover': {
-			color: 'grey',
-			backgroundColor: 'white',
-			border: '0.1em grey white',
-			cursor: 'pointer'
-		}
-	}
-});
+
 export default Tag;

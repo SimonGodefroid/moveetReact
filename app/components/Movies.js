@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import ScrollTop from './Core/ScrollTop';
 import Loader from './Core/Loader';
 import Tag from './Core/Tag';
 import MovieCard from './Movies/MovieCard';
 import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
-// import InfiniteScroll from 'react-infinite-scroller';
-// import AnimakitExpander from 'animakit-expander';
 import Api from '../Api.js';
 
 const options = [
@@ -74,6 +73,7 @@ class Movies extends Component {
 				results: json.results
 			});
 		});
+		this.renderTags();
 	}
 	handleSortTitle() {
 		this.setState({
@@ -131,6 +131,22 @@ class Movies extends Component {
 		}, value);
 	}
 
+	renderTags() {
+		console.log('coucou renderTags');
+		return (
+			<div>
+				<Tag
+					label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
+					onClickFn={this.handleSortTitle}
+				/>{' '}
+				<Tag
+					label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
+					onClickFn={this.handleSortDate}
+				/>
+			</div>
+		);
+	}
+
 	toggleFavorite(movie, user) {
 		Api.toggleFavorite(
 			json => {
@@ -154,8 +170,8 @@ class Movies extends Component {
 			return (
 				<div key={index}>
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<MovieCard movie={movie} />{' '}
-					</div>{' '}
+						<MovieCard movie={movie} />
+					</div>
 				</div>
 			);
 		});
@@ -214,8 +230,8 @@ class Movies extends Component {
 										<Tag
 											label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
 											onClickFn={this.handleSortDate}
-										/>{' '}
-									</div>{' '}
+										/>
+									</div>
 									<div
 										style={{
 											paddingTop: '0.5em',
@@ -239,5 +255,24 @@ class Movies extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	tag: {
+		color: 'white',
+		backgroundColor: 'grey',
+		padding: '0.2em 0.4em',
+		margin: '0 0.3em 0 0',
+		borderRadius: '2em',
+		border: '0.1em grey solid'
+	},
+	hoverTag: {
+		':hover': {
+			color: 'grey',
+			backgroundColor: 'white',
+			border: '0.1em grey white',
+			cursor: 'pointer'
+		}
+	}
+});
 
 export default Movies;
