@@ -35,7 +35,7 @@ export default class Buddies extends Component {
 								url={buddy.account.picture || 'http://via.placeholder.com/150x200'}
 							/>
 							<p className={css(styles.buddyTitle)}>
-								{buddy.account.username} - {buddy.account.genre.substring(0, 1)}, {buddy.account.age},{' '}
+								{buddy.account.username} - {buddy.account.gender}, {buddy.account.age},{' '}
 								{buddy.account.subscription}
 							</p>
 							<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>

@@ -21,7 +21,7 @@ html
     script(src="https://unpkg.com/react-select/dist/react-select.js")
     link(rel="stylesheet" href="https://unpkg.com/react-select/dist/react-select.css")
     style(data-aphrodite)
-      =css.content
+      //- =css.content
   body
     #app!= html
     script.
@@ -30,11 +30,6 @@ html
     script(src='/js/lib/jquery.js')
     script(src='/js/lib/bootstrap.js')
     script(src='/js/bundle.js')
-
-    script.
-      StyleSheet.rehydrate(`${JSON.stringify(css.renderedClassNames)}
-      ReactDOM.render(<App/>,document.getElementsById('root')`)
-
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID.
     script.

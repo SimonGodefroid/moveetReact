@@ -12,12 +12,12 @@ import Loader from './Core/Loader';
 // import InfiniteScroll from 'react-infinite-scroller';
 // import AnimakitExpander from 'animakit-expander';
 
-class Theater extends Component {
+class Theaters extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			theaters: [],
-			limit: 3,
+			limit: 10,
 			page: ''
 		};
 		this.handlePageClick = this.handlePageClick.bind(this);
@@ -56,8 +56,9 @@ class Theater extends Component {
 			return (
 				<div key={index}>
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<a href={`/theaters/${theater._id}`} />
-						<TheaterCard theater={theater} />
+						<a href={`/theaters/${theater._id}`}>
+							<TheaterCard theater={theater} />
+						</a>
 						<div className={css(styles.buttonsContainer)}>
 							<Button text={'Buddy Finder'} icon={'search'} color={'black'} />
 						</div>
@@ -121,4 +122,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Theater;
+export default Theaters;

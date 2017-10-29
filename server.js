@@ -125,13 +125,18 @@ app.use(function(req, res) {
 					)
 				);
 			});
-
+			console.log('css', css);
 			// var html = ReactDOM.renderToString(
 			// 	React.createElement(Provider, { store: store }, React.createElement(Router.RouterContext, renderProps))
 			// );
+
+			// script.
+			//- console.log('caca css',css)
+			//- StyleSheet.rehydrate(JSON.stringify(css.renderedClassNames));
+			//- ReactDOM.render(document.getElementsById('root'));
 			res.render('layout', {
 				html: html,
-				css: css,
+				// css: css,
 				initialState: store.getState()
 			});
 		} else {
