@@ -20,14 +20,28 @@ class Api {
 				callback(json);
 			});
 	}
-	getMoviesByGenre(callback, genre) {
-		console.log('https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=' + genre);
-		fetch('https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=' + genre)
-			.then(res => res.json())
-			.then(json => {
-				console.log('json', json);
-				callback(json);
-			});
+	getMoviesByGenre(callback, genre, sortField, sortOrder) {
+		if (!sortField || !sortOrder) {
+			console.log(`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}`);
+			fetch(`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[release.releaseDate]=1`)
+				.then(res => res.json())
+				.then(json => {
+					console.log('json', json);
+					callback(json);
+				});
+		} else {
+			console.log(
+				`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[${sortField}]=${sortOrder}`
+			);
+			fetch(
+				`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[${sortField}]=${sortOrder}`
+			)
+				.then(res => res.json())
+				.then(json => {
+					console.log('json', json);
+					callback(json);
+				});
+		}
 	}
 	//////////////////////////////////////////////////
 	// Users methods /////////////////////////////////
@@ -88,8 +102,9 @@ class Api {
 		let lat = !user.account.location.coordinates[0] ? 0 : !user.account.location.coordinates[0];
 		let long = !user.account.location.coordinates[1] ? 0 : !user.account.location.coordinates[1];
 		let zip = !zipcode ? '75000' : zipcode;
-		console.log(`https://moveet-api.herokuapp.com/api/v1/showtimes/?movie=${moviecode}long=${long}&lat${lat}`);
-		fetch(`https://moveet-api.herokuapp.com/api/v1/showtimes/?long=${long}&lat${lat}&zip=${zip}`)
+		console.log(`https://moveet-api.herokuapp.com/api/v1/showtimes/?movie=${moviecode}&long=${long}&lat${lat}`);
+		fetch(`https://moveet-api.herokuapp.com/api/v1/showtimes/?
+		?movie=${moviecode}&long=${long}&lat${lat}&zip=${zip}`)
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);
@@ -99,9 +114,9 @@ class Api {
 	//////////////////////////////////////////////////
 	// Theaters methods //////////////////////////////
 	//////////////////////////////////////////////////
-	getAllTheaters(callback) {
-		console.log(`https://moveet-api.herokuapp.com/api/v1/theaters`);
-		fetch(`https://moveet-api.herokuapp.com/api/v1/theaters`)
+	getAllTheaters(callback, limit, page) {
+		console.log(`https://moveet-api.herokuapp.com/api/v1/theaters?limit=${limit}&page=${page}`);
+		fetch(`https://moveet-api.herokuapp.com/api/v1/theaters?limit=${limit}&page=${page}`)
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);

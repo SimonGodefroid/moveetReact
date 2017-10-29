@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
@@ -137,7 +138,12 @@ if (app.get('env') === 'production') {
 
 // server log
 app.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
+	console.log(
+		'%s App is running at http://localhost:%d in %s mode',
+		chalk.green('✓'),
+		app.get('port'),
+		app.get('env')
+	);
 });
 // end of server log
 module.exports = app;

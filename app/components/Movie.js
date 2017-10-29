@@ -3,13 +3,15 @@ import { StyleSheet, css } from 'aphrodite';
 import ScrollTop from './Core/ScrollTop';
 import ReactTooltip from 'react-tooltip';
 import Loader from './Core/Loader';
+import Tag from './Core/Tag';
 import Api from '../Api.js';
 class Movie extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			movie: '',
-			buddies: []
+			buddies: [],
+			pending: true
 		};
 	}
 	componentDidMount() {
@@ -27,6 +29,7 @@ class Movie extends Component {
 			this.props.params.id
 		);
 	}
+
 	renderMovie(movie) {
 		return (
 			<div>
@@ -52,13 +55,12 @@ class Movie extends Component {
 			);
 		}
 	}
+
 	renderGenre(movie) {
 		const genreRes = movie.genreList.map((genre, index) => {
 			return (
 				<a href={`/movies?genreList=${genre}`}>
-					<span key={index} className={css(styles.tag, styles.hoverTag)}>
-						{genre}
-					</span>
+					<Tag index={index} label={genre} />
 				</a>
 			);
 		});
@@ -90,6 +92,9 @@ class Movie extends Component {
 
 	renderBubbles(buddies) {
 		const resBubbles = buddies.map((buddy, index) => {
+			{
+				this.renderTrailer(this.state.movie);
+			}
 			return (
 				<div key={index}>
 					<a

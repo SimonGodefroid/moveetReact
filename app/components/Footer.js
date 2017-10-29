@@ -9,7 +9,8 @@ class Footer extends React.Component {
 					color: 'white',
 					position: 'fixed',
 					bottom: 0,
-					fontFamily: 'Josefin Sans'
+					fontFamily: 'Josefin Sans',
+					zIndex: 1000
 				}}
 			>
 				<p>© 2017 Moveet, Inc. All Rights Reserved.</p>
