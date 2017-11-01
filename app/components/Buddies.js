@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { StyleSheet, css } from 'aphrodite';
 import ReactTooltip from 'react-tooltip';
 import Poster from './Movies/Poster';
@@ -20,7 +21,7 @@ export default class Buddies extends Component {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
 		Api.getAllBuddies(json => {
 			this.setState({ buddies: json.message });
-		}, '59ed03350e23a465a4878559');
+		}, '59f62899753f98989fd3250d');
 	}
 	renderBuddies(buddies) {
 		const resBuddies = buddies.map((buddy, index) => {
@@ -97,7 +98,7 @@ export default class Buddies extends Component {
 						data-tip={`${favorite.originalTitle}<br />`}
 						style={{ position: 'absolute', top: '18em', left: (index + 1) * 70 }}
 					>
-						<a href={`/movies/${favorite._id}`}>
+						<Link to={`/movies/${favorite._id}`}>
 							<img
 								key={index}
 								src={favorite.posterPath || 'http://via.placeholder.com/150x200'}
@@ -110,7 +111,7 @@ export default class Buddies extends Component {
 									border: 'white 0.2em solid'
 								}}
 							/>
-						</a>
+						</Link>
 					</a>
 				</div>
 			);

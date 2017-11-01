@@ -5,6 +5,7 @@ import Loader from './Core/Loader';
 import Tag from './Core/Tag';
 import MovieCard from './Movies/MovieCard';
 import ReactTooltip from 'react-tooltip';
+import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
 import Api from '../Api.js';
 
@@ -54,25 +55,35 @@ class Movies extends Component {
 			movies: [],
 			value: [],
 			total: 0,
-			limit: 0,
+			limit: 25,
 			results: 0,
+			page: '',
 			sortAlpha: -1,
-			sortDate: -1
+			sortDate: -1,
+			pageCount: '',
+			forcePage: ''
 		};
 		this.toggleFavorite = this.toggleFavorite.bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.handleSortDate = this.handleSortDate.bind(this);
 		this.handleSortTitle = this.handleSortTitle.bind(this);
+		this.handlePageClick = this.handlePageClick.bind(this);
 	}
 	componentDidMount() {
-		Api.getAllMovies(json => {
-			this.setState({
-				movies: json.message,
-				total: json.total,
-				limit: json.limit,
-				results: json.results
-			});
-		});
+		Api.getAllNowShowingMovies(
+			json => {
+				this.setState({
+					movies: json.message,
+					total: json.total,
+					limit: json.limit,
+					results: json.results,
+					pageCount: Math.floor(json.results / json.limit)
+				});
+			},
+			this.state.limit,
+			this.state.page,
+			''
+		);
 		this.renderTags();
 	}
 	handleSortTitle() {
@@ -81,15 +92,18 @@ class Movies extends Component {
 			selected: 'alpha'
 		});
 		console.log('state sortAlpha', this.state.sortAlpha);
-		Api.getMoviesByGenre(
+		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({
 					movies: json.message,
 					total: json.total,
 					limit: json.limit,
-					results: json.results
+					results: json.results,
+					pageCount: Math.floor(json.results / json.limit)
 				});
 			},
+			this.state.limit,
+			'',
 			this.state.value,
 			'originalTitle',
 			this.state.sortAlpha
@@ -101,18 +115,22 @@ class Movies extends Component {
 			selected: 'date'
 		});
 		console.log('state sortDate', this.state.sortDate);
-		Api.getMoviesByGenre(
+		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({
 					movies: json.message,
 					total: json.total,
 					limit: json.limit,
-					results: json.results
+					results: json.results,
+					forcePage: 0,
+					pageCount: Math.floor(json.results / json.limit)
 				});
 			},
-			this.state.value,
-			'release.releaseDate',
-			this.state.sortDate
+			this.state.limit, // limit
+			'', // page
+			this.state.value, // genres selected
+			'release.releaseDate', // sort by
+			this.state.sortDate // sort order
 		);
 	}
 
@@ -121,16 +139,48 @@ class Movies extends Component {
 		this.setState({
 			value: value
 		});
-		Api.getMoviesByGenre(json => {
-			this.setState({
-				movies: json.message,
-				total: json.total,
-				limit: json.limit,
-				results: json.results
-			});
-		}, value);
+		Api.getAllNowShowingMovies(
+			json => {
+				this.setState({
+					movies: json.message,
+					total: json.total,
+					limit: json.limit,
+					results: json.results,
+					forcePage: 0,
+					pageCount: Math.floor(json.results / json.limit)
+				});
+			},
+			this.state.limit,
+			1,
+			value
+		);
 	}
 
+	handlePageClick(data) {
+		let selected = data.selected + 1;
+		this.setState(
+			{ page: selected, forcePage: selected - 1 },
+			Api.getAllNowShowingMovies(
+				json => {
+					this.setState({
+						movies: json.message,
+						total: json.total,
+						limit: json.limit,
+						results: json.results,
+						pageCount: Math.floor(json.results / json.limit)
+					});
+				},
+				this.state.limit,
+				selected,
+				this.state.value
+			),
+			window.scroll({
+				top: 0,
+				left: 0,
+				behavior: 'smooth'
+			})
+		);
+	}
 	renderTags() {
 		console.log('coucou renderTags');
 		return (
@@ -170,7 +220,7 @@ class Movies extends Component {
 			return (
 				<div key={index}>
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<MovieCard movie={movie} />
+						<MovieCard movie={movie} onClickFn={this.toggleFavorite}/>
 					</div>
 				</div>
 			);
@@ -179,6 +229,7 @@ class Movies extends Component {
 	}
 
 	render() {
+		console.log('this.state.forcePage', this.state.forcePage);
 		return (
 			<div
 				className="container"
@@ -194,13 +245,17 @@ class Movies extends Component {
 					>
 						<div className="section">
 							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h3 className="section-heading"> Choisir les genres </h3>{' '}
+								<h3 className="section-heading" style={{ textAlign: 'center', height: '20vh' }}>
+									{' '}
+									FILMS
+								</h3>
 								<div style={{}}>
 									<div
 										style={{
 											width: '40vw',
 											float: 'left',
-											display: 'inline-block'
+											display: 'inline-block',
+											zIndex: 2000
 										}}
 									>
 										<Select
@@ -246,9 +301,41 @@ class Movies extends Component {
 									</div>
 								</div>
 							</div>
+							<div style={{ textAlign: 'center' }}>
+								<ReactPaginate
+									previousLabel={'<'}
+									nextLabel={'>'}
+									breakLabel={<a href="">...</a>}
+									breakClassName={'break-me'}
+									pageCount={this.state.pageCount}
+									marginPagesDisplayed={2}
+									pageRangeDisplayed={5}
+									onPageChange={this.handlePageClick}
+									containerClassName={'pagination'}
+									subContainerClassName={'pages pagination'}
+									activeClassName={'active'}
+									forcePage={this.state.forcePage}
+								/>
+							</div>
 						</div>
 						{this.renderMovies(this.state.movies)}
 					</div>
+				</div>
+				<div style={{ textAlign: 'center' }}>
+					<ReactPaginate
+						previousLabel={'<'}
+						nextLabel={'>'}
+						breakLabel={<a href="">...</a>}
+						breakClassName={'break-me'}
+						pageCount={this.state.pageCount}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={this.handlePageClick}
+						containerClassName={'pagination'}
+						subContainerClassName={'pages pagination'}
+						activeClassName={'active'}
+						forcePage={this.state.forcePage}
+					/>
 				</div>
 				<ScrollTop />
 			</div>

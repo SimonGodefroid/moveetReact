@@ -5,10 +5,9 @@ class TheaterCard extends Component {
 	render() {
 		return (
 			<div className={css(styles.theaterCard, styles.hover)}>
-				<Poster url={this.props.theater.picture.href} />
+				<Poster url={this.props.theater.picture.href} height={80} width={80} />
 				<p className={css(styles.theaterTitle)}>
-					{this.props.theater.name},{this.props.theater.address}
-					{this.props.theater.postalCode}
+					{this.props.theater.name}, {this.props.theater.address} {this.props.theater.postalCode}{' '}
 					{this.props.theater.city}
 				</p>
 			</div>

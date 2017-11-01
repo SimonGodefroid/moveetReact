@@ -45,7 +45,7 @@ class Showtimes extends Component {
 								icon={'plus'}
 								color={'rgba(100,255,200,0.9)'}
 								onClickFn={this.toggleFavorite}
-								arg1={'59ed03350e23a465a4878559'}
+								arg1={'59f62899753f98989fd3250d'}
 								arg2={showtime._id}
 							/>
 							{movie.hasShowtime === 1

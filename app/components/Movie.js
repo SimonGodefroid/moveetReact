@@ -25,7 +25,7 @@ class Movie extends Component {
 				this.setState({ buddies: json.message });
 				console.log('buddies', json.message);
 			},
-			'59ed03350e23a465a4878559',
+			'59f62899753f98989fd3250d',
 			this.props.params.id
 		);
 	}

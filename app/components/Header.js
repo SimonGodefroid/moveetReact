@@ -89,11 +89,11 @@ class Header extends React.Component {
 									FILMS
 								</IndexLink>
 							</li>
-							<li>
+							{/*<li>
 								<Link to="/theaters" activeStyle={active}>
 									SALLES
 								</Link>
-							</li>
+							</li>*/}
 							<li>
 								<Link to="/events" activeStyle={active}>
 									EVENEMENTS

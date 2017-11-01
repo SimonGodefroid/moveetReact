@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { StyleSheet, css } from 'aphrodite';
 import ReactTooltip from 'react-tooltip';
 import ReactPaginate from 'react-paginate';
@@ -56,9 +57,9 @@ class Theaters extends Component {
 			return (
 				<div key={index}>
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<a href={`/theaters/${theater._id}`}>
+						<Link to={{ pathname: `/theaters/${theater._id}`, search: `${theater.code}` }}>
 							<TheaterCard theater={theater} />
-						</a>
+						</Link>
 						<div className={css(styles.buttonsContainer)}>
 							<Button text={'Buddy Finder'} icon={'search'} color={'black'} />
 						</div>

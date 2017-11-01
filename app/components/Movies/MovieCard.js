@@ -14,13 +14,17 @@ class MovieCard extends Component {
 		if (movie.castingShort && movie.castingShort.actors) {
 			return (
 				<div>
-					<p>Acteurs: {`${movie.castingShort['actors'].substring(0, 83)}...`}</p>
-					<p>Réalisateur: {movie.castingShort['directors']}</p>
+					<p>De: {movie.castingShort['directors']}</p>
+					<p>Avec: {`${movie.castingShort['actors'].substring(0, 83)}...`}</p>
 				</div>
 			);
 		}
 	}
-
+	renderRuntime(movie) {
+		let hours = Math.floor(movie.runtime / 3600);
+		let mins = (movie.runtime - hours * 3600) / 60;
+		return <span>{`${hours}h ${mins}min`}</span>;
+	}
 	renderButton(text, icon, color, fn, arg1, arg2) {
 		return <Button text={text} icon={icon} color={color} onClickFn={fn} arg1={arg1} arg2={arg2} />;
 	}
@@ -31,9 +35,10 @@ class MovieCard extends Component {
 			<div>
 				<a href={`/movies/${movie._id}`}>
 					<div className={css(styles.movieCard, styles.hover)}>
-						<Poster url={movie.posterPath} />
+						<Poster url={movie.posterPath} height={'75%'} width={'20%'} />
 						<p className={css(styles.movieTitle)}>
-							{movie.originalTitle} - {this.renderDate(movie)}
+							{movie.originalTitle} <br />
+							{this.renderDate(movie)}, {this.renderRuntime(movie)}
 						</p>
 						<div className={css(styles.movieCasting)}>{this.renderCasting(movie)}</div>
 						<p className={css(styles.movieSynopsis)}>{`${movie.synopsis.substring(0, 255)}...`}</p>
@@ -45,8 +50,8 @@ class MovieCard extends Component {
 						text={'Watchlist'}
 						icon={'plus'}
 						color={'rgba(100,255,200,0.9)'}
-						onClickFn={this.toggleFavorite}
-						arg1={'59ed03350e23a465a4878559'}
+						onClickFn={this.props.onClickFn}
+						arg1={'59f62899753f98989fd3250d'}
 						arg2={movie._id}
 					/>
 					{movie.hasShowtime === 1
@@ -64,10 +69,11 @@ class MovieCard extends Component {
 const styles = StyleSheet.create({
 	movieCard: {
 		// backgroundColor: 'rgba(100,200,255,0.9)',
-		backgroundColor: 'rgb(255, 204, 204)',
+		// backgroundColor: 'rgb(255, 204, 204)',
+		backgroundColor: 'white',
 		color: 'black',
-		border: '0.1em black solid',
-		borderRadius: '0.2em',
+		// border: '0.1em black solid',
+		// borderRadius: '0.2em',
 		margin: '1em 0',
 		width: '90vw',
 		padding: '1em'
@@ -78,46 +84,31 @@ const styles = StyleSheet.create({
 		right: '0',
 		alignItems: 'center',
 		display: 'inline',
-		width: '20em'
+		width: '16em'
 	},
 	movieTitle: {
 		position: 'absolute',
 		top: '2em',
-		left: '15vw',
+		left: '24vw',
 		fontSize: '1.2em'
 	},
 	movieCasting: {
 		position: 'absolute',
-		top: '4.5em',
-		left: '15vw',
+		top: '8em',
+		left: '24vw',
 		width: '50vw'
 	},
 	movieSynopsis: {
 		position: 'absolute',
-		top: '9em',
-		left: '15vw',
-		width: '50vw'
+		top: '12em',
+		left: '24vw',
+		width: '45vw'
 	},
 	hover: {
 		':hover': {
-			boxShadow: '0 0 1em rgba(255, 203, 238, 1)',
+			boxShadow: '0 0 0.2em rgba(100,200,255,0.9)',
 			borderColor: 'white'
 		}
-	},
-	hoverButton: {
-		':hover': {
-			backgroundColor: 'white',
-			color: 'black'
-		}
-	},
-	scrollTop: {
-		backgroundColor: 'rgba(100,100,100,0.3)',
-		textAlign: 'center',
-		fontSize: '3em',
-		width: '1em',
-		height: '1em',
-		color: 'white',
-		lineHeight: '1.5em'
 	}
 });
 export default MovieCard;

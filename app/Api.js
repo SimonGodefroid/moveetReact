@@ -2,9 +2,24 @@ class Api {
 	//////////////////////////////////////////////////
 	// Movies methods ////////////////////////////////
 	//////////////////////////////////////////////////
-	getAllMovies(callback) {
-		console.log('https://moveet-api.herokuapp.com/api/v1/movies');
-		fetch('https://moveet-api.herokuapp.com/api/v1/movies')
+	getAllNowShowingMovies(callback, limit, page, genre, sortField, sortOrder) {
+		let sort = !(sortField || sortOrder) ? '' : `&sort[${sortField}]=${sortOrder}`;
+		console.log(
+			`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[statistics.releaseWeekPosition]=-1&sort[statistics.theaterCount]=-1&statusList=nowshowing&release.releaseState.value=Sortie%20en%20salle&limit=${limit}&page=${page}${sort}`
+		);
+		fetch(
+			`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[statistics.releaseWeekPosition]=-1&sort[statistics.theaterCount]=-1&statusList=nowshowing&release.releaseState.value=Sortie%20en%20salle&limit=${limit}&page=${page}${sort}`
+		)
+			.then(res => res.json())
+			.then(json => {
+				console.log('json', json);
+				callback(json);
+			});
+	}
+	getAllComingSoonMovies(callback) {
+		fetch(
+			`https://moveet-api.herokuapp.com/api/v1/movies?sort[statistics.releaseWeekPosition]=-1&sort[statistics.theaterCount]=-1&statusList=comingsoon&release.releaseState.value=Sortie%20en%20salle`
+		)
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);
@@ -19,29 +34,6 @@ class Api {
 				console.log('json', json);
 				callback(json);
 			});
-	}
-	getMoviesByGenre(callback, genre, sortField, sortOrder) {
-		if (!sortField || !sortOrder) {
-			console.log(`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}`);
-			fetch(`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[release.releaseDate]=1`)
-				.then(res => res.json())
-				.then(json => {
-					console.log('json', json);
-					callback(json);
-				});
-		} else {
-			console.log(
-				`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[${sortField}]=${sortOrder}`
-			);
-			fetch(
-				`https://moveet-api.herokuapp.com/api/v1/movies?genreListSimon=${genre}&sort[${sortField}]=${sortOrder}`
-			)
-				.then(res => res.json())
-				.then(json => {
-					console.log('json', json);
-					callback(json);
-				});
-		}
 	}
 	//////////////////////////////////////////////////
 	// Users methods /////////////////////////////////
@@ -105,6 +97,16 @@ class Api {
 		console.log(`https://moveet-api.herokuapp.com/api/v1/showtimes/?movie=${moviecode}&long=${long}&lat${lat}`);
 		fetch(`https://moveet-api.herokuapp.com/api/v1/showtimes/?
 		?movie=${moviecode}&long=${long}&lat${lat}&zip=${zip}`)
+			.then(res => res.json())
+			.then(json => {
+				console.log('json', json);
+				callback(json);
+			});
+	}
+	getTheaterShowtimes(callback, theatercode) {
+		console.log('theatercode', theatercode);
+		console.log(`https://moveet-api.herokuapp.com/api/v1/showtimes?theaters=${theatercode}`);
+		fetch(`https://moveet-api.herokuapp.com/api/v1/showtimes?theaters=${theatercode}`)
 			.then(res => res.json())
 			.then(json => {
 				console.log('json', json);
