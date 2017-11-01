@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { StyleSheet, css } from 'aphrodite';
 import ReactTooltip from 'react-tooltip';
+import BuddyCard from './Buddies/BuddyCard';
 import Poster from './Movies/Poster';
 import Button from './Core/Button';
 import Loader from './Core/Loader';
@@ -23,43 +24,29 @@ export default class Buddies extends Component {
 			this.setState({ buddies: json.message });
 		}, '59f62899753f98989fd3250d');
 	}
-	renderBuddies(buddies) {
-		const resBuddies = buddies.map((buddy, index) => {
+
+	renderBuddies(arr) {
+		if (!arr || arr.length === 0) {
+			return (
+				<div>
+					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<Loader />
+					</div>
+				</div>
+			);
+		}
+		const resBuddies = arr.map((buddy, index) => {
 			return (
 				<div key={index}>
-					<div className={'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
-						<div className={css(styles.buddyCard, styles.hover)}>
-							<Avatar
-								style={{ borderRadius: '1em' }}
-								height={170}
-								width={150}
-								url={buddy.account.picture || 'http://via.placeholder.com/150x200'}
-							/>
-							<p className={css(styles.buddyTitle)}>
-								{buddy.account.username} - {buddy.account.gender}, {buddy.account.age},{' '}
-								{buddy.account.subscription}
-							</p>
-							<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>
-								{buddy.account.description.substring(0, 80)}
-							</p>
-							{this.renderFavorites(buddy)}
-							<div className={css(styles.buttonsContainer)}>
-								<Button
-									text={'Chatter avec '}
-									param={buddy.account.username}
-									icon={'comment'}
-									color={'black'}
-								/>
-								<Button text={'Proposer une séance'} icon={'clock-o'} color={'rgba(100,255,200,0.9)'} />
-								<Button text={'Proposer un film'} icon={'ticket'} color={'pink'} />
-							</div>
-						</div>
+					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<BuddyCard buddy={buddy} />
 					</div>
 				</div>
 			);
 		});
 		return resBuddies;
 	}
+
 	renderBubbles(buddies) {
 		const resBubbles = buddies.map((buddy, index) => {
 			return (
@@ -120,76 +107,54 @@ export default class Buddies extends Component {
 	}
 
 	render() {
-		if (this.state.buddies.length > 0) {
-			return (
-				<div className="container" style={{ fontFamily: 'Quicksand' }}>
-					<div className="row">
-						<div style={{ height: '100vh', marginTop: 55 }}>{this.renderBuddies(this.state.buddies)}</div>
+		return (
+			<div
+				className="container"
+				style={{
+					fontFamily: 'Quicksand'
+				}}
+			>
+				<div className="row">
+					<div style={{ height: '100vh' }}>
+						<div className="section">
+							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h3 className="section-heading" style={{ textAlign: 'center', height: '20vh' }}>
+									BUDDIES
+								</h3>
+								<Button text={'Trouver mes matches'} color={'pink'} />
+								<div />
+							</div>
+						</div>
+						{this.renderBuddies(this.state.buddies)}
 					</div>
-					<ReactTooltip
-						id="buddy"
-						offset={{ top: 150, left: -30 }}
-						place="top"
-						type="success"
-						effect="solid"
-						multiline="true"
-					/>
-					<ReactTooltip
-						id="movie"
-						offset={{ top: 150, left: -235 }}
-						place="top"
-						type="success"
-						effect="solid"
-						multiline="true"
-					/>
-					<div style={{ margin: '0em', color: 'black' }}>{this.renderBubbles(this.state.buddies)}</div>
-					<ScrollTop />
 				</div>
-			);
-		} else {
-			return <Loader />;
-		}
+				<ReactTooltip
+					id="buddy"
+					offset={{ top: 150, left: -30 }}
+					place="top"
+					type="success"
+					effect="solid"
+					multiline="true"
+				/>
+				<ReactTooltip
+					id="movie"
+					offset={{ top: 150, left: -235 }}
+					place="top"
+					type="success"
+					effect="solid"
+					multiline="true"
+				/>
+				<div style={{ margin: '0em', color: 'black' }}>{this.renderBubbles(this.state.buddies)}</div>
+				<ScrollTop />
+			</div>
+		);
 	}
 }
 
 const styles = StyleSheet.create({
-	buddyCard: {
-		backgroundColor: 'rgba(100,200,255,0.9)',
-		color: 'black',
-		height: '14em',
-		border: '0.1em black solid',
-		borderRadius: '0.2em',
-		margin: '1em 0em',
-		width: '90vw',
-		padding: '1em'
-	},
-	buddyTitle: {
-		position: 'absolute',
-		top: '1.6em',
-		left: '15vw',
-		fontSize: '1.2em'
-	},
-	buddyBody: {
-		position: 'absolute',
-		top: '3.4em',
-		left: '15vw',
-		fontSize: '1.2em',
-		width: '50vw',
-		minWidth: '40em'
-	},
-	buttonsContainer: {
-		position: 'absolute',
-		top: '3em',
-		right: '-2em',
-		alignItems: 'center',
-		display: 'inline',
-		width: '20em'
-	},
-	hover: {
-		':hover': {
-			boxShadow: '0 0 1em rgba(255, 203, 238, 1)',
-			borderColor: 'white'
-		}
+	header: {
+		textAlign: 'center',
+		height: '20vh'
 	},
 	hoverBubbles: {
 		':hover': {
@@ -197,24 +162,5 @@ const styles = StyleSheet.create({
 			transform: 'scale(2.009) translate(.1em,-1em)',
 			zIndex: '10000'
 		}
-	},
-	hoverButton: {
-		':hover': {
-			backgroundColor: 'white',
-			border: '0.2em black solid',
-			color: 'black'
-		}
-	},
-	scrollTop: {
-		backgroundColor: 'black',
-		padding: '0.5em',
-		position: 'fixed',
-		fontSize: '1em',
-		bottom: 50,
-		right: 30,
-		cursor: 'pointer',
-		transitionDuration: '0.2s',
-		transitionTimingFunction: 'linear',
-		transitionDelay: '0s'
 	}
 });

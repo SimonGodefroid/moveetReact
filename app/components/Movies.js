@@ -5,7 +5,7 @@ import Loader from './Core/Loader';
 import Tag from './Core/Tag';
 import MovieCard from './Movies/MovieCard';
 import ReactTooltip from 'react-tooltip';
-import ReactPaginate from 'react-paginate';
+import Pagination from './Core/Pagination';
 import Select from 'react-select';
 import Api from '../Api.js';
 
@@ -91,7 +91,6 @@ class Movies extends Component {
 			sortAlpha: this.state.sortAlpha * -1,
 			selected: 'alpha'
 		});
-		console.log('state sortAlpha', this.state.sortAlpha);
 		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({
@@ -114,7 +113,6 @@ class Movies extends Component {
 			sortDate: this.state.sortDate * -1,
 			selected: 'date'
 		});
-		console.log('state sortDate', this.state.sortDate);
 		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({
@@ -157,6 +155,7 @@ class Movies extends Component {
 	}
 
 	handlePageClick(data) {
+		console.log('coucou data', data);
 		let selected = data.selected + 1;
 		this.setState(
 			{ page: selected, forcePage: selected - 1 },
@@ -188,7 +187,7 @@ class Movies extends Component {
 				<Tag
 					label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
 					onClickFn={this.handleSortTitle}
-				/>{' '}
+				/>
 				<Tag
 					label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
 					onClickFn={this.handleSortDate}
@@ -220,7 +219,7 @@ class Movies extends Component {
 			return (
 				<div key={index}>
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<MovieCard movie={movie} onClickFn={this.toggleFavorite}/>
+						<MovieCard movie={movie} onClickFn={this.toggleFavorite} />
 					</div>
 				</div>
 			);
@@ -229,7 +228,6 @@ class Movies extends Component {
 	}
 
 	render() {
-		console.log('this.state.forcePage', this.state.forcePage);
 		return (
 			<div
 				className="container"
@@ -238,17 +236,10 @@ class Movies extends Component {
 				}}
 			>
 				<div className="row">
-					<div
-						style={{
-							height: '100vh'
-						}}
-					>
+					<div style={{ height: '100vh' }}>
 						<div className="section">
 							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h3 className="section-heading" style={{ textAlign: 'center', height: '20vh' }}>
-									{' '}
-									FILMS
-								</h3>
+								<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
 								<div style={{}}>
 									<div
 										style={{
@@ -268,8 +259,9 @@ class Movies extends Component {
 											simpleValue
 											options={options}
 											value={this.state.value}
-										/>{' '}
-									</div>{' '}
+											style={{ zIndex: 23000 }}
+										/>
+									</div>
 									<div
 										style={{
 											paddingTop: '0.5em',
@@ -281,62 +273,31 @@ class Movies extends Component {
 										<Tag
 											label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
 											onClickFn={this.handleSortTitle}
-										/>{' '}
+										/>
 										<Tag
 											label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
 											onClickFn={this.handleSortDate}
 										/>
 									</div>
-									<div
-										style={{
-											paddingTop: '0.5em',
-											width: '20vw',
-											float: 'right',
-											textAlign: 'right',
-											display: 'inline-block'
-										}}
-									>
-										{' '}
+									<div className={css(styles.results)}>
 										{this.state.results} Résultats parmi {this.state.total} Films
 									</div>
 								</div>
 							</div>
-							<div style={{ textAlign: 'center' }}>
-								<ReactPaginate
-									previousLabel={'<'}
-									nextLabel={'>'}
-									breakLabel={<a href="">...</a>}
-									breakClassName={'break-me'}
-									pageCount={this.state.pageCount}
-									marginPagesDisplayed={2}
-									pageRangeDisplayed={5}
-									onPageChange={this.handlePageClick}
-									containerClassName={'pagination'}
-									subContainerClassName={'pages pagination'}
-									activeClassName={'active'}
-									forcePage={this.state.forcePage}
-								/>
-							</div>
+							<Pagination
+								pageCount={this.state.pageCount}
+								handlePageClickFn={this.handlePageClick}
+								forcePage={this.state.forcePage}
+							/>
 						</div>
 						{this.renderMovies(this.state.movies)}
 					</div>
 				</div>
-				<div style={{ textAlign: 'center' }}>
-					<ReactPaginate
-						previousLabel={'<'}
-						nextLabel={'>'}
-						breakLabel={<a href="">...</a>}
-						breakClassName={'break-me'}
-						pageCount={this.state.pageCount}
-						marginPagesDisplayed={2}
-						pageRangeDisplayed={5}
-						onPageChange={this.handlePageClick}
-						containerClassName={'pagination'}
-						subContainerClassName={'pages pagination'}
-						activeClassName={'active'}
-						forcePage={this.state.forcePage}
-					/>
-				</div>
+				<Pagination
+					pageCount={this.state.pageCount}
+					handlePageClickFn={this.handlePageClick}
+					forcePage={this.state.forcePage}
+				/>
 				<ScrollTop />
 			</div>
 		);
@@ -344,21 +305,16 @@ class Movies extends Component {
 }
 
 const styles = StyleSheet.create({
-	tag: {
-		color: 'white',
-		backgroundColor: 'grey',
-		padding: '0.2em 0.4em',
-		margin: '0 0.3em 0 0',
-		borderRadius: '2em',
-		border: '0.1em grey solid'
+	results: {
+		paddingTop: '0.5em',
+		width: '20vw',
+		float: 'right',
+		textAlign: 'right',
+		display: 'inline-block'
 	},
-	hoverTag: {
-		':hover': {
-			color: 'grey',
-			backgroundColor: 'white',
-			border: '0.1em grey white',
-			cursor: 'pointer'
-		}
+	header: {
+		textAlign: 'center',
+		height: '20vh'
 	}
 });
 

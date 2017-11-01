@@ -17,6 +17,10 @@ import Theater from './components/Theater';
 import Events from './components/Events';
 import Chat from './components/Chat';
 import Movie from './components/Movie';
+// import BuddiesResults from './components/BuddiesResults';
+// import BuddyFinderResults from './components/BuddyFinderResults';
+// import MatchesResults from './components/MatchesResults';
+// import ShowtimesResults from './components/ShowtimesResults';
 
 export default function getRoutes(store) {
 	const ensureAuthenticated = (nextState, replace) => {
@@ -49,6 +53,13 @@ export default function getRoutes(store) {
 			<Route path="/forgot" component={Forgot} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
 			<Route path="/reset/:token" component={Reset} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
 			{/*<Route path="/movies/:genre" component={Movies} />*/}
+			{/*<Route path="/results/buddies/movie/:id(/^[a-f\d]{24}$/i)" component={BuddyFinderResults} />*/}
+			{/*<Route path="/results/buddies/:id(/^[a-f\d]{24}$/i)" component={BuddiesResults} />*/}
+			{/* tous les utilisateurs qui veulent voir un film en particulier */}
+			{/*<Route path="/results/buddies/matches/:id(/^[a-f\d]{24}$/i)" component={MatchesResults} />*/}
+			{/* les utilisateurs qui ont des films en commun avec toi */}
+			{/*<Route path="/results/showtimes/:id(/^[a-f\d]{24}$/i)" component={ShowtimesResults} />*/}
+			{/* les horaires pour un film en particulier dans tous les cinémas */}*/}
 			<Route path="/movies/:id(/^[a-f\d]{24}$/i)" component={Movie} />
 			<Route path="/theaters/:id(/^[a-f\d]{24}$/i)" component={Theater} />
 			<Route path="*" component={NotFound} onLeave={clearMessages} />
