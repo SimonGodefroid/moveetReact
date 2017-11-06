@@ -17,6 +17,7 @@ import Theater from './components/Theater';
 import Events from './components/Events';
 import Chat from './components/Chat';
 import Movie from './components/Movie';
+import Buddy from './components/Buddy';
 // import BuddiesResults from './components/BuddiesResults';
 // import BuddyFinderResults from './components/BuddyFinderResults';
 // import MatchesResults from './components/MatchesResults';
@@ -42,7 +43,7 @@ export default function getRoutes(store) {
 		<Route path="/" component={App}>
 			<IndexRoute component={Home} onLeave={clearMessages} />
 			<Route path="/movies" component={Movies} onLeave={clearMessages} title={'Films'} />
-			<Route path="/buddies" component={Buddies} onLeave={clearMessages} />
+			<Route path="/buddies" component={Buddies} onLeave={clearMessages} title={'Buddies'} />
 			<Route path="/theaters" component={Theaters} onLeave={clearMessages} />
 			<Route path="/events" component={Events} onLeave={clearMessages} />
 			<Route path="/chat" component={Chat} onLeave={clearMessages} />
@@ -61,6 +62,7 @@ export default function getRoutes(store) {
 			{/*<Route path="/results/showtimes/:id(/^[a-f\d]{24}$/i)" component={ShowtimesResults} />*/}
 			{/* les horaires pour un film en particulier dans tous les cinémas */}*/}
 			<Route path="/movies/:id(/^[a-f\d]{24}$/i)" component={Movie} />
+			<Route path="/buddies/:id(/^[a-f\d]{24}$/i)" component={Buddy} title={'Buddies'} />
 			<Route path="/theaters/:id(/^[a-f\d]{24}$/i)" component={Theater} />
 			<Route path="*" component={NotFound} onLeave={clearMessages} />
 		</Route>

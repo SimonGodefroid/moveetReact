@@ -18,10 +18,11 @@ class Button extends Component {
 
 const styles = StyleSheet.create({
 	button: {
-		marginTop: '0.5em',
-		width: '12em',
+		marginTop: '1vw',
+		width: '15vw',
 		borderRadius: '2em',
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		display: 'block'
 	},
 	hoverButton: {
 		':hover': {

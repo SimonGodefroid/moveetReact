@@ -47,6 +47,7 @@ class Api {
 			});
 	}
 	getMatches(callback, userid) {
+		console.log(`https://moveet-api.herokuapp.com/api/v1/users/${userid}/matches`);
 		fetch(`https://moveet-api.herokuapp.com/api/v1/users/${userid}/matches`)
 			.then(res => res.json())
 			.then(json => {

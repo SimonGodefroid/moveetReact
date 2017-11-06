@@ -1,4 +1,4 @@
-@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CRaleway:100,300,600,700,800%7CJulius+Sans+One:300,400,600,700,800");
+@import url('//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CRaleway:100,300,600,700,800%7CJulius+Sans+One:300,400,600,700,800');
 
 /* Scaffolding
 /* ------------------------- */
@@ -44,6 +44,10 @@ footer {
 
 .login-container {
 	max-width: 555px;
+}
+
+.active > a {
+	z-index: 0 !important;
 }
 
 /* Alerts

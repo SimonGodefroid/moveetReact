@@ -16,6 +16,8 @@ export default class Buddies extends Component {
 		this.state = {
 			buddies: []
 		};
+		this.getAllBuddies = this.getAllBuddies.bind(this);
+		this.getMatches = this.getMatches.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,6 +25,18 @@ export default class Buddies extends Component {
 		Api.getAllBuddies(json => {
 			this.setState({ buddies: json.message });
 		}, '59f62899753f98989fd3250d');
+	}
+
+	getAllBuddies(userid) {
+		Api.getAllBuddies(json => {
+			this.setState({ buddies: json.message });
+		}, userid);
+	}
+
+	getMatches(userid) {
+		Api.getMatches(json => {
+			this.setState({ buddies: json.message });
+		}, userid);
 	}
 
 	renderBuddies(arr) {
@@ -121,7 +135,18 @@ export default class Buddies extends Component {
 								<h3 className="section-heading" style={{ textAlign: 'center', height: '20vh' }}>
 									BUDDIES
 								</h3>
-								<Button text={'Trouver mes matches'} color={'pink'} />
+								<Button
+									text={'Voir tous les buddies'}
+									color={'pink'}
+									onClickFn={this.getAllBuddies}
+									arg1={'59f62899753f98989fd3250d'}
+								/>
+								<Button
+									text={'Trouver mes matches'}
+									color={'pink'}
+									onClickFn={this.getMatches}
+									arg1={'59f62899753f98989fd3250d'}
+								/>
 								<div />
 							</div>
 						</div>

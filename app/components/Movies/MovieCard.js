@@ -2,6 +2,21 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Poster from './Poster';
 import Button from '../Core/Button';
+import { Link } from 'react-router';
+
+const users = [
+	'59f62899753f98989fd32511',
+	'59f62899753f98989fd3250d',
+	'59f62899753f98989fd3250f',
+	'59f62899753f98989fd32514',
+	'59f62899753f98989fd32515',
+	'59f62899753f98989fd32510',
+	'59f62899753f98989fd32516',
+	'59f62899753f98989fd32513',
+	'59f62899753f98989fd3250e'
+];
+
+// Math.floor((Math.random() * 10) + 1);
 
 class MovieCard extends Component {
 	renderDate(movie) {
@@ -33,7 +48,7 @@ class MovieCard extends Component {
 		const { movie } = this.props;
 		return (
 			<div>
-				<a href={`/movies/${movie._id}`}>
+				<Link to={`/movies/${movie._id}`}>
 					<div className={css(styles.movieCard, styles.hover)}>
 						<Poster url={movie.posterPath} height={'75%'} width={'20%'} />
 						<p className={css(styles.movieTitle)}>
@@ -43,7 +58,7 @@ class MovieCard extends Component {
 						<div className={css(styles.movieCasting)}>{this.renderCasting(movie)}</div>
 						<p className={css(styles.movieSynopsis)}>{`${movie.synopsis.substring(0, 255)}...`}</p>
 					</div>
-				</a>
+				</Link>
 				<div className={css(styles.buttonsContainer)}>
 					<Button text={'Buddy Finder'} icon={'search'} color={'black'} />
 					<Button
