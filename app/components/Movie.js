@@ -92,14 +92,14 @@ class Movie extends Component {
 
 	renderBubbles(buddies) {
 		const resBubbles = buddies.map((buddy, index) => {
-			{
-				this.renderTrailer(this.state.movie);
-			}
+			// {
+			// 	this.renderTrailer(this.state.movie);
+			// }
 			return (
 				<div key={index}>
 					<a
 						key={index}
-						href={`/users/${buddy._id}`}
+						href={`/buddies/${buddy._id}`}
 						data-for="buddy"
 						data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
 						style={{ position: 'absolute', left: (index + 1) * 45 }}

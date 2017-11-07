@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-class Button extends Component {
+
+export default class Button extends Component {
 	render() {
 		return (
 			<button
@@ -10,7 +11,10 @@ class Button extends Component {
 				}}
 				style={{ color: this.props.color, border: `${this.props.color} 0.1em solid` }}
 			>
-				<i className={`fa fa-${this.props.icon}`} aria-hidden="true" /> {this.props.text} {this.props.param}
+				<i className={`fa fa-${this.props.icon}`} aria-hidden="true" />{' '}
+				<span style={{ textAlign: 'justify' }}>
+					{this.props.text} {this.props.param}
+				</span>
 			</button>
 		);
 	}
@@ -22,14 +26,20 @@ const styles = StyleSheet.create({
 		width: '15vw',
 		borderRadius: '2em',
 		backgroundColor: 'white',
-		display: 'block'
+		display: 'block',
+		textAlign: 'center',
+		boxSizing: 'border-box'
 	},
 	hoverButton: {
 		':hover': {
 			backgroundColor: 'black',
 			border: '0.1em white solid',
-			color: 'white'
+			color: 'white',
+			'-webkit-transition': 'all .40s',
+			'-moz-transition': 'all .40s',
+			transition: 'all .40s',
+			'-webkit-font-smoothing': 'antialiased',
+			'-moz-osx-font-smoothing': 'grayscale'
 		}
 	}
 });
-export default Button;

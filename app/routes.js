@@ -19,7 +19,7 @@ import Chat from './components/Chat';
 import Movie from './components/Movie';
 import Buddy from './components/Buddy';
 // import BuddiesResults from './components/BuddiesResults';
-// import BuddyFinderResults from './components/BuddyFinderResults';
+import BuddyFinderResults from './components/BuddyFinderResults';
 // import MatchesResults from './components/MatchesResults';
 // import ShowtimesResults from './components/ShowtimesResults';
 
@@ -63,6 +63,7 @@ export default function getRoutes(store) {
 			{/* les horaires pour un film en particulier dans tous les cinémas */}*/}
 			<Route path="/movies/:id(/^[a-f\d]{24}$/i)" component={Movie} />
 			<Route path="/buddies/:id(/^[a-f\d]{24}$/i)" component={Buddy} title={'Buddies'} />
+			<Route path="/findbuddy/:id(/^[a-f\d]{24}$/i)" component={BuddyFinderResults} title={'Buddy Finder'} />
 			<Route path="/theaters/:id(/^[a-f\d]{24}$/i)" component={Theater} />
 			<Route path="*" component={NotFound} onLeave={clearMessages} />
 		</Route>

@@ -23,13 +23,9 @@ class Landing extends Component {
 
 	componentDidMount() {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
-	}
-
-	onBeforeChange(selectedIndex, $selectedPanel, $selectedTabMenu) {
-		console.log('before the tab ' + selectedIndex);
-	}
-	onAfterChange(selectedIndex, $selectedPanel, $selectedTabMenu) {
-		console.log('after the tab ' + selectedIndex);
+		Api.getAllComingSoonMovies(json => {
+			this.setState({ movies: json.message });
+		});
 	}
 
 	render() {
@@ -41,17 +37,7 @@ class Landing extends Component {
 						backgroundColor: ''
 					}}
 				>
-					<div className="row">
-						<div style={{ height: '100vh' }}>
-							{console.log('this.state', this.state)}
-							<div style={{ margin: 0, color: 'black' }}>
-								<p onClick={() => this.fetchGenre(2)}>click me for Action</p>
-								<p onClick={() => this.fetchGenre(3)}>click me for Drama</p>
-								<p onClick={() => this.fetchGenre(4)}>click me for Comedy</p>
-								<Movies movies={this.state.movies} />
-							</div>
-						</div>
-					</div>
+					<div className="row">My Landing Page</div>
 				</div>
 			);
 		} else {

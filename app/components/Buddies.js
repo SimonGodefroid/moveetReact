@@ -9,37 +9,44 @@ import Loader from './Core/Loader';
 import ScrollTop from './Core/ScrollTop';
 import Avatar from './User/Avatar';
 import Api from '../Api.js';
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 export default class Buddies extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			buddies: []
+			buddies: [],
+			matches: [],
+			tabIndex: 0
 		};
-		this.getAllBuddies = this.getAllBuddies.bind(this);
-		this.getMatches = this.getMatches.bind(this);
+		// this.getAllBuddies = this.getAllBuddies.bind(this);
+		// this.getMatches = this.getMatches.bind(this);
 	}
 
 	componentDidMount() {
 		// this.props.dispatch(getMoviesByGenre(this.state.genre));
 		Api.getAllBuddies(json => {
-			this.setState({ buddies: json.message });
+			this.setState({
+				buddies: json.message
+			});
+		}, '59f62899753f98989fd3250d');
+
+		Api.getMatches(json => {
+			this.setState({
+				matches: json.message
+			});
 		}, '59f62899753f98989fd3250d');
 	}
 
 	getAllBuddies(userid) {
 		Api.getAllBuddies(json => {
-			this.setState({ buddies: json.message });
-		}, userid);
-	}
-
-	getMatches(userid) {
-		Api.getMatches(json => {
-			this.setState({ buddies: json.message });
+			this.setState({
+				buddies: json.message
+			});
 		}, userid);
 	}
 
 	renderBuddies(arr) {
+		console.log('arr', arr);
 		if (!arr || arr.length === 0) {
 			return (
 				<div>
@@ -51,10 +58,8 @@ export default class Buddies extends Component {
 		}
 		const resBuddies = arr.map((buddy, index) => {
 			return (
-				<div key={index}>
-					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<BuddyCard buddy={buddy} />
-					</div>
+				<div key={index} className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<BuddyCard buddy={buddy} />{' '}
 				</div>
 			);
 		});
@@ -68,7 +73,10 @@ export default class Buddies extends Component {
 					<a
 						data-for="buddy"
 						data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
-						style={{ position: 'absolute', left: (index + 1) * 45 }}
+						style={{
+							position: 'absolute',
+							left: (index + 1) * 45
+						}}
 					>
 						<img
 							key={index}
@@ -82,97 +90,98 @@ export default class Buddies extends Component {
 								border: 'white 0.2em solid'
 								// left: (index + 1) * 40,
 							}}
-						/>
-					</a>
+						/>{' '}
+					</a>{' '}
 				</div>
 			);
 		});
 		return resBubbles;
 	}
 
-	renderFavorites(buddy) {
-		const resFavorites = buddy.fiveFavorites.map((favorite, index) => {
-			return (
-				<div key={index}>
-					<a
-						data-for="movie"
-						data-tip={`${favorite.originalTitle}<br />`}
-						style={{ position: 'absolute', top: '18em', left: (index + 1) * 70 }}
-					>
-						<Link to={`/movies/${favorite._id}`}>
-							<img
-								key={index}
-								src={favorite.posterPath || 'http://via.placeholder.com/150x200'}
-								width={70}
-								height={100}
-								style={{
-									position: 'absolute',
-									left: 200,
-									bottom: 50,
-									border: 'white 0.2em solid'
-								}}
-							/>
-						</Link>
-					</a>
-				</div>
-			);
-		});
-		return resFavorites;
-	}
-
 	render() {
-		return (
-			<div
-				className="container"
-				style={{
-					fontFamily: 'Quicksand'
-				}}
-			>
-				<div className="row">
-					<div style={{ height: '100vh' }}>
-						<div className="section">
-							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h3 className="section-heading" style={{ textAlign: 'center', height: '20vh' }}>
-									BUDDIES
-								</h3>
-								<Button
-									text={'Voir tous les buddies'}
-									color={'pink'}
-									onClickFn={this.getAllBuddies}
-									arg1={'59f62899753f98989fd3250d'}
-								/>
-								<Button
-									text={'Trouver mes matches'}
-									color={'pink'}
-									onClickFn={this.getMatches}
-									arg1={'59f62899753f98989fd3250d'}
-								/>
-								<div />
+		if (Object.keys(this.state.buddies).length > 0) {
+			return (
+				<div
+					className="container"
+					style={{
+						fontFamily: 'Quicksand'
+					}}
+				>
+					<div className="row">
+						<div
+						// style={{
+						// height: '100vh'
+						// }}
+						>
+							<div className="section">
+								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h3
+										className="section-heading"
+										style={{
+											textAlign: 'center',
+											height: '10vh'
+										}}
+									>
+										BUDDIES
+									</h3>
+									<Tabs>
+										<TabList>
+											<Tab>
+												Buddies{' '}
+												<span
+												// className={'label label-as-badge'}
+												// style={{ borderRadius: '2em', backgroundColor: 'black' }}
+												>
+													{this.state.buddies.length}
+												</span>
+											</Tab>
+											<Tab>
+												Matches <span>{this.state.matches.length}</span>
+											</Tab>
+										</TabList>
+										<TabPanel>{this.renderBuddies(this.state.buddies)}</TabPanel>
+										<TabPanel>{this.renderBuddies(this.state.matches)}</TabPanel>
+									</Tabs>
+								</div>
 							</div>
 						</div>
-						{this.renderBuddies(this.state.buddies)}
 					</div>
+					<ReactTooltip
+						id="buddy"
+						offset={{
+							top: 150,
+							left: -30
+						}}
+						place="top"
+						type="success"
+						effect="solid"
+						multiline="true"
+					/>
+					<ReactTooltip
+						id="movie"
+						offset={{
+							top: 150,
+							left: -235
+						}}
+						place="top"
+						type="success"
+						effect="solid"
+						multiline="true"
+					/>
+					<div
+						style={{
+							margin: '0em',
+							color: 'black'
+						}}
+					>
+						{/*this.renderBubbles(this.state.buddies)*/}
+					</div>
+					<ScrollTop />
 				</div>
-				<ReactTooltip
-					id="buddy"
-					offset={{ top: 150, left: -30 }}
-					place="top"
-					type="success"
-					effect="solid"
-					multiline="true"
-				/>
-				<ReactTooltip
-					id="movie"
-					offset={{ top: 150, left: -235 }}
-					place="top"
-					type="success"
-					effect="solid"
-					multiline="true"
-				/>
-				<div style={{ margin: '0em', color: 'black' }}>{this.renderBubbles(this.state.buddies)}</div>
-				<ScrollTop />
-			</div>
-		);
+			);
+		} else {
+			return <Loader />;
+		}
 	}
 }
 

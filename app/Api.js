@@ -39,6 +39,7 @@ class Api {
 	// Users methods /////////////////////////////////
 	//////////////////////////////////////////////////
 	getAllBuddies(callback, userid) {
+		console.log('GET ALL BUDDIES URL', `https://moveet-api.herokuapp.com/api/v1/buddies/${userid}`);
 		fetch(`https://moveet-api.herokuapp.com/api/v1/buddies/${userid}`)
 			.then(res => res.json())
 			.then(json => {
@@ -46,8 +47,17 @@ class Api {
 				callback(json);
 			});
 	}
+	getBuddyById(callback, userid) {
+		console.log('$GET BUDDY BY ID URL', `https://moveet-api.herokuapp.com/api/v1/users/${userid}`);
+		fetch(`https://moveet-api.herokuapp.com/api/v1/users/${userid}`)
+			.then(res => res.json())
+			.then(json => {
+				console.log('json', json);
+				callback(json);
+			});
+	}
 	getMatches(callback, userid) {
-		console.log(`https://moveet-api.herokuapp.com/api/v1/users/${userid}/matches`);
+		console.log('$GET MATCHES URL', `https://moveet-api.herokuapp.com/api/v1/users/${userid}/matches`);
 		fetch(`https://moveet-api.herokuapp.com/api/v1/users/${userid}/matches`)
 			.then(res => res.json())
 			.then(json => {

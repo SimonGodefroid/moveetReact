@@ -24,7 +24,6 @@ class MovieCard extends Component {
 			return new Date(movie.release.releaseDate.toString()).toLocaleDateString('fr-FR');
 		}
 	}
-
 	renderCasting(movie) {
 		if (movie.castingShort && movie.castingShort.actors) {
 			return (
@@ -60,7 +59,9 @@ class MovieCard extends Component {
 					</div>
 				</Link>
 				<div className={css(styles.buttonsContainer)}>
-					<Button text={'Buddy Finder'} icon={'search'} color={'black'} />
+					<Link to={{ pathname: `/findbuddy/${movie._id}`, search: `${movie.originalTitle}` }}>
+						<Button text={'Buddy Finder'} icon={'search'} color={'black'} onClickFn={() => {}} />
+					</Link>
 					<Button
 						text={'Watchlist'}
 						icon={'plus'}

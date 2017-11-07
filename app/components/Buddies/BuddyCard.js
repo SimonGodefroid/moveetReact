@@ -9,7 +9,38 @@ class BuddyCard extends Component {
 			return buddy.account.username;
 		}
 	}
-
+	renderMovies(buddy) {
+		let arr = buddy.fiveFavorites || buddy.matchingMovies;
+		if (arr) {
+			const resMovies = arr.map((movie, index) => {
+				return (
+					<div key={index}>
+						<a
+							data-for="movie"
+							data-tip={`${movie.originalTitle}<br />`}
+							style={{ position: 'absolute', top: '18em', left: (index + 1) * 70 }}
+						>
+							<Link to={`/movies/${movie._id}`}>
+								<img
+									key={index}
+									src={movie.posterPath || 'http://via.placeholder.com/150x200'}
+									width={70}
+									height={100}
+									style={{
+										position: 'absolute',
+										left: 200,
+										bottom: 50,
+										border: 'white 0.2em solid'
+									}}
+								/>
+							</Link>
+						</a>
+					</div>
+				);
+			});
+			return resMovies;
+		}
+	}
 	render() {
 		const { buddy } = this.props;
 		return (
@@ -29,19 +60,15 @@ class BuddyCard extends Component {
 						<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>
 							{buddy.account.description.substring(0, 80)}
 						</p>
-						{/*this.renderFavorites(buddy)*/}
-						<div className={css(styles.buttonsContainer)}>
-							<Button
-								text={'Chatter avec '}
-								param={buddy.account.username}
-								icon={'comment'}
-								color={'black'}
-							/>
-							<Button text={'Proposer une séance'} icon={'clock-o'} color={'rgba(100,255,200,0.9)'} />
-							<Button text={'Proposer un film'} icon={'ticket'} color={'pink'} />
-						</div>
+						{/*this.renderMatches(buddy)*/}
+						{this.renderMovies(buddy)}
 					</div>
 				</Link>
+				<div className={css(styles.buttonsContainer)}>
+					<Button text={'Chatter avec '} param={buddy.account.username} icon={'comment'} color={'black'} />
+					<Button text={'Proposer une séance'} icon={'clock-o'} color={'rgba(100,255,200,0.9)'} />
+					<Button text={'Proposer un film'} icon={'ticket'} color={'pink'} />
+				</div>
 			</div>
 		);
 	}

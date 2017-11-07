@@ -228,79 +228,82 @@ class Movies extends Component {
 	}
 
 	render() {
-		return (
-			<div
-				className="container"
-				style={{
-					fontFamily: 'Quicksand'
-				}}
-			>
-				<div className="row">
-					<div style={{ height: '100vh' }}>
-						<div className="section">
-							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
-								<div style={{}}>
-									<div
-										style={{
-											width: '40vw',
-											float: 'left',
-											display: 'inline-block',
-											zIndex: 2000
-										}}
-									>
-										<Select
-											closeOnSelect={false}
-											disabled={false}
-											multi={true}
-											onChange={this.handleSelectChange}
-											placeholder="Sélectionnez les genres"
-											removeSelected={true}
-											simpleValue
-											options={options}
-											value={this.state.value}
-											style={{ zIndex: 23000 }}
-										/>
-									</div>
-									<div
-										style={{
-											paddingTop: '0.5em',
-											width: '20vw',
-											display: 'inline-block',
-											textAlign: 'center'
-										}}
-									>
-										<Tag
-											label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
-											onClickFn={this.handleSortTitle}
-										/>
-										<Tag
-											label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
-											onClickFn={this.handleSortDate}
-										/>
-									</div>
-									<div className={css(styles.results)}>
-										{this.state.results} Résultats parmi {this.state.total} Films
+		if (Object.keys(this.state.movies).length > 0) {
+			return (
+				<div
+					className="container"
+					style={{
+						fontFamily: 'Quicksand'
+					}}
+				>
+					<div className="row">
+						<div style={{ height: '100vh' }}>
+							<div className="section">
+								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
+									<div style={{}}>
+										<div
+											style={{
+												width: '40vw',
+												float: 'left',
+												display: 'inline-block',
+												zIndex: 2000
+											}}
+										>
+											<Select
+												closeOnSelect={false}
+												disabled={false}
+												multi={true}
+												onChange={this.handleSelectChange}
+												placeholder="Sélectionnez les genres"
+												removeSelected={true}
+												simpleValue
+												options={options}
+												value={this.state.value}
+											/>
+										</div>
+										<div
+											style={{
+												paddingTop: '0.5em',
+												width: '20vw',
+												display: 'inline-block',
+												textAlign: 'center'
+											}}
+										>
+											<Tag
+												label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
+												onClickFn={this.handleSortTitle}
+											/>
+											<Tag
+												label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
+												onClickFn={this.handleSortDate}
+											/>
+										</div>
+										<div className={css(styles.results)}>
+											{this.state.results} Résultats parmi {this.state.total} Films
+										</div>
 									</div>
 								</div>
+								<Pagination
+									pageCount={this.state.pageCount}
+									handlePageClickFn={this.handlePageClick}
+									forcePage={this.state.forcePage}
+								/>
 							</div>
-							<Pagination
-								pageCount={this.state.pageCount}
-								handlePageClickFn={this.handlePageClick}
-								forcePage={this.state.forcePage}
-							/>
+							{this.renderMovies(this.state.movies)}
 						</div>
-						{this.renderMovies(this.state.movies)}
 					</div>
+					<Pagination
+						pageCount={this.state.pageCount}
+						handlePageClickFn={this.handlePageClick}
+						forcePage={this.state.forcePage}
+					/>
+					<ScrollTop />
 				</div>
-				<Pagination
-					pageCount={this.state.pageCount}
-					handlePageClickFn={this.handlePageClick}
-					forcePage={this.state.forcePage}
-				/>
-				<ScrollTop />
-			</div>
-		);
+			);
+		} else {
+			return <Loader />;
+		}
 	}
 }
 
