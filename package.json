@@ -4,10 +4,10 @@
 	"description": "My app description",
 	"scripts": {
 		"build": "webpack --display-error-details",
-		"go": "npm run build && npm start",
+		"go": "npm run build && nodemon start",
 		"deploy": "npm test && git push heroku master",
 		"postinstall": "npm run build",
-		"start": "nodemon server.js"
+		"start": "node server.js"
 	},
 	"dependencies": {
 		"animakit-rotator": "^2.1.1",
