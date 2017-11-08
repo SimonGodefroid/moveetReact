@@ -119,10 +119,10 @@ class Chat extends Component {
 				</div>
 				<form onSubmit={this.handleSubmit}>
 					<label>
-						Message
+						Messages
 						<input type="text" value={this.state.value} onChange={this.handleChange} />
 					</label>
-					<input type="submit" value="Submit" />
+					<input type="submit" value="Submit" placeholder="Type your message here" />
 				</form>
 			</div>
 		);

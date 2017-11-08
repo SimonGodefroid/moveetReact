@@ -7,7 +7,7 @@ export function login(email, password) {
 		dispatch({
 			type: 'CLEAR_MESSAGES'
 		});
-		return fetch('/login', {
+		return fetch(`https://moveet-api.herokuapp.com/api/v1/auth/login`, {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -46,9 +46,9 @@ export function signup(name, email, password) {
 		dispatch({
 			type: 'CLEAR_MESSAGES'
 		});
-		return fetch('/signup', {
+		return fetch(`https://moveet-api.herokuapp.com/api/v1/auth/signup`, {
 			method: 'post',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 			body: JSON.stringify({ name: name, email: email, password: password })
 		}).then(response => {
 			return response.json().then(json => {

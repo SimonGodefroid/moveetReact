@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Button from '../Core/Button';
 import Avatar from '../User/Avatar';
+import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router';
 class BuddyCard extends Component {
 	renderName(buddy) {
@@ -10,7 +11,8 @@ class BuddyCard extends Component {
 		}
 	}
 	renderMovies(buddy) {
-		let arr = buddy.fiveFavorites || buddy.matchingMovies;
+		let arr = [];
+		this.props.type === 'buddy' ? (arr = buddy.fiveFavorites) : (arr = buddy.matchingMovies);
 		if (arr) {
 			const resMovies = arr.map((movie, index) => {
 				return (
@@ -69,6 +71,17 @@ class BuddyCard extends Component {
 					<Button text={'Proposer une séance'} icon={'clock-o'} color={'rgba(100,255,200,0.9)'} />
 					<Button text={'Proposer un film'} icon={'ticket'} color={'pink'} />
 				</div>
+				<ReactTooltip
+					id="movie"
+					offset={{
+						top: 150,
+						left: -235
+					}}
+					place="top"
+					type="success"
+					effect="solid"
+					multiline="true"
+				/>
 			</div>
 		);
 	}

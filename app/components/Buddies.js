@@ -45,7 +45,7 @@ export default class Buddies extends Component {
 		}, userid);
 	}
 
-	renderBuddies(arr) {
+	renderBuddies(arr, type) {
 		console.log('arr', arr);
 		if (!arr || arr.length === 0) {
 			return (
@@ -59,7 +59,7 @@ export default class Buddies extends Component {
 		const resBuddies = arr.map((buddy, index) => {
 			return (
 				<div key={index} className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<BuddyCard buddy={buddy} />{' '}
+					<BuddyCard buddy={buddy} type={type} />{' '}
 				</div>
 			);
 		});
@@ -139,14 +139,14 @@ export default class Buddies extends Component {
 												Matches <span>{this.state.matches.length}</span>
 											</Tab>
 										</TabList>
-										<TabPanel>{this.renderBuddies(this.state.buddies)}</TabPanel>
-										<TabPanel>{this.renderBuddies(this.state.matches)}</TabPanel>
+										<TabPanel>{this.renderBuddies(this.state.buddies, 'buddies')}</TabPanel>
+										<TabPanel>{this.renderBuddies(this.state.matches, 'matches')}</TabPanel>
 									</Tabs>
 								</div>
 							</div>
 						</div>
 					</div>
-					<ReactTooltip
+					{/*<ReactTooltip
 						id="buddy"
 						offset={{
 							top: 150,
@@ -156,18 +156,8 @@ export default class Buddies extends Component {
 						type="success"
 						effect="solid"
 						multiline="true"
-					/>
-					<ReactTooltip
-						id="movie"
-						offset={{
-							top: 150,
-							left: -235
-						}}
-						place="top"
-						type="success"
-						effect="solid"
-						multiline="true"
-					/>
+					/>*/}
+
 					<div
 						style={{
 							margin: '0em',
