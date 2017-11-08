@@ -78,6 +78,7 @@ export function signup(name, email, password) {
 export function logout() {
 	cookie.remove('token');
 	cookie.remove('user');
+	console.log('cookie', cookie);
 	browserHistory.push('/');
 	return {
 		type: 'LOGOUT_SUCCESS'
