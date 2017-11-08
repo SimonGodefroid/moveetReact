@@ -112,8 +112,7 @@ app.use(function(req, res) {
 	var initialState = {
 		auth: {
 			token: req.cookies.token,
-			user: req.user
-			// || JSON.parse(req.cookies.user)
+			user: req.user || JSON.parse(req.cookies.user)
 		},
 		messages: {}
 	};
