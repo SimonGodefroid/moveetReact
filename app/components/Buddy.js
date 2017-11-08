@@ -41,7 +41,7 @@ export default class Buddy extends Component {
 							{buddy.account.subscription}
 						</p>
 						<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>
-							{buddy.account.description.substring(0, 80)}
+							{buddy.account.description ? buddy.account.description.substring(0, 80) : ''}
 						</p>
 						{/*this.renderFavorites(buddy)*/}
 						<div>
