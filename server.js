@@ -109,10 +109,12 @@ if (app.get('env') === 'development') {
 
 // React server rendering
 app.use(function(req, res) {
+	console.log('req.user', req.user);
+	console.log('cookies.user', req.cookies.user);
 	var initialState = {
 		auth: {
 			token: req.cookies.token,
-			user: req.user || JSON.parse(req.cookies.user)
+			user: !(req.user && req.cookies.user) ? {} : JSON.parse(req.cookies.user) || req.user
 		},
 		messages: {}
 	};
