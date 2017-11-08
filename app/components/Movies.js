@@ -70,6 +70,7 @@ class Movies extends Component {
 		this.handlePageClick = this.handlePageClick.bind(this);
 	}
 	componentDidMount() {
+		const title = this.props.pageTitle;
 		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({

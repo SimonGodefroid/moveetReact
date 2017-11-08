@@ -42,11 +42,17 @@ export default function getRoutes(store) {
 	return (
 		<Route path="/" component={App}>
 			<IndexRoute component={Home} onLeave={clearMessages} />
-			<Route path="/movies" component={Movies} onLeave={clearMessages} title={'Films'} />
-			<Route path="/buddies" component={Buddies} onLeave={clearMessages} title={'Buddies'} />
-			<Route path="/theaters" component={Theaters} onLeave={clearMessages} />
-			<Route path="/events" component={Events} onLeave={clearMessages} />
-			<Route path="/chat" component={Chat} onLeave={clearMessages} />
+			<Route path="/movies" component={Movies} onLeave={clearMessages} pageTitle={'Films'} />
+			<Route
+				path="/buddies"
+				component={Buddies}
+				onEnter={ensureAuthenticated}
+				onLeave={clearMessages}
+				title={'Buddies'}
+			/>
+			<Route path="/theaters" component={Theaters} onEnter={ensureAuthenticated} onLeave={clearMessages} />
+			<Route path="/events" component={Events} onEnter={ensureAuthenticated} onLeave={clearMessages} />
+			<Route path="/chat" component={Chat} onEnter={ensureAuthenticated} onLeave={clearMessages} />
 			<Route path="/contact" component={Contact} onLeave={clearMessages} />
 			<Route path="/login" component={Login} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
 			<Route path="/signup" component={Signup} onEnter={skipIfAuthenticated} onLeave={clearMessages} />
@@ -62,9 +68,19 @@ export default function getRoutes(store) {
 			{/*<Route path="/results/showtimes/:id(/^[a-f\d]{24}$/i)" component={ShowtimesResults} />*/}
 			{/* les horaires pour un film en particulier dans tous les cinémas */}*/}
 			<Route path="/movies/:id(/^[a-f\d]{24}$/i)" component={Movie} />
-			<Route path="/buddies/:id(/^[a-f\d]{24}$/i)" component={Buddy} title={'Buddies'} />
-			<Route path="/findbuddy/:id(/^[a-f\d]{24}$/i)" component={BuddyFinderResults} title={'Buddy Finder'} />
-			<Route path="/theaters/:id(/^[a-f\d]{24}$/i)" component={Theater} />
+			<Route
+				path="/buddies/:id(/^[a-f\d]{24}$/i)"
+				onEnter={ensureAuthenticated}
+				component={Buddy}
+				title={'Buddies'}
+			/>
+			<Route
+				path="/findbuddy/:id(/^[a-f\d]{24}$/i)"
+				onEnter={ensureAuthenticated}
+				component={BuddyFinderResults}
+				title={'Buddy Finder'}
+			/>
+			<Route path="/theaters/:id(/^[a-f\d]{24}$/i)" onEnter={ensureAuthenticated} component={Theater} />
 			<Route path="*" component={NotFound} onLeave={clearMessages} />
 		</Route>
 	);

@@ -9,7 +9,7 @@ export function login(email, password) {
 		});
 		return fetch(`https://moveet-api.herokuapp.com/api/v1/auth/login`, {
 			method: 'post',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 			body: JSON.stringify({
 				email: email,
 				password: password
@@ -90,7 +90,7 @@ export function forgotPassword(email) {
 		});
 		return fetch('/forgot', {
 			method: 'post',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 			body: JSON.stringify({ email: email })
 		}).then(response => {
 			if (response.ok) {
@@ -119,7 +119,7 @@ export function resetPassword(password, confirm, pathToken) {
 		});
 		return fetch(`/reset/${pathToken}`, {
 			method: 'post',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 			body: JSON.stringify({
 				password: password,
 				confirm: confirm

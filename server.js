@@ -113,9 +113,7 @@ app.use(function(req, res) {
 		auth: { token: req.cookies.token, user: req.user },
 		messages: {}
 	};
-
 	var store = configureStore(initialState);
-
 	Router.match({ routes: routes.default(store), location: req.url }, function(err, redirectLocation, renderProps) {
 		if (err) {
 			res.status(500).send(err.message);
@@ -131,7 +129,6 @@ app.use(function(req, res) {
 					)
 				);
 			});
-			console.log('css', css);
 			// var html = ReactDOM.renderToString(
 			// 	React.createElement(Provider, { store: store }, React.createElement(Router.RouterContext, renderProps))
 			// );
