@@ -60,7 +60,7 @@ class BuddyCard extends Component {
 							{buddy.account.subscription}
 						</p>
 						<p className={css(styles.buddyBody)} style={{ fontFamily: 'Quicksand' }}>
-							{buddy.account.description.substring(0, 80)}
+							{buddy.account.description ? buddy.account.description.substring(0, 80) : ''}
 						</p>
 						{/*this.renderMatches(buddy)*/}
 						{this.renderMovies(buddy)}
