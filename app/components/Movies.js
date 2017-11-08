@@ -70,6 +70,7 @@ class Movies extends Component {
 		this.handlePageClick = this.handlePageClick.bind(this);
 	}
 	componentDidMount() {
+		console.log('this.props.user @MOVIES', this.props.user);
 		const title = this.props.pageTitle;
 		Api.getAllNowShowingMovies(
 			json => {
@@ -182,7 +183,6 @@ class Movies extends Component {
 		);
 	}
 	renderTags() {
-		console.log('coucou renderTags');
 		return (
 			<div>
 				<Tag

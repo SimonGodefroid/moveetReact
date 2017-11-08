@@ -84,19 +84,15 @@ class MovieCard extends Component {
 
 const styles = StyleSheet.create({
 	movieCard: {
-		// backgroundColor: 'rgba(100,200,255,0.9)',
-		// backgroundColor: 'rgb(255, 204, 204)',
 		backgroundColor: 'white',
 		color: 'black',
-		// border: '0.1em black solid',
-		// borderRadius: '0.2em',
 		margin: '1em 0',
 		width: '90vw',
 		padding: '1em'
 	},
 	buttonsContainer: {
 		position: 'absolute',
-		top: '3em',
+		top: '10%',
 		right: '0',
 		alignItems: 'center',
 		display: 'inline',
@@ -104,19 +100,19 @@ const styles = StyleSheet.create({
 	},
 	movieTitle: {
 		position: 'absolute',
-		top: '2em',
+		top: '8%',
 		left: '24vw',
 		fontSize: '1.2em'
 	},
 	movieCasting: {
 		position: 'absolute',
-		top: '8em',
+		top: '30%',
 		left: '24vw',
 		width: '50vw'
 	},
 	movieSynopsis: {
 		position: 'absolute',
-		top: '12em',
+		top: '50%',
 		left: '24vw',
 		width: '45vw'
 	},

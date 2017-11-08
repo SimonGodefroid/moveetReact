@@ -10,6 +10,7 @@ class Header extends React.Component {
 	}
 
 	render() {
+		console.log('this.props', this.props);
 		const active = { borderBottom: 'solid 0.02em white', lineHeight: '1em' };
 		const rightNav = this.props.token ? (
 			<ul
@@ -22,8 +23,12 @@ class Header extends React.Component {
 			>
 				<li className="dropdown">
 					<a href="#" data-toggle="dropdown" className="navbar-avatar dropdown-toggle">
-						<img src={this.props.user.picture || this.props.user.gravatar} />{' '}
-						{this.props.user.name || this.props.user.email || this.props.user.id} <i className="caret" />
+						{console.log('this.props HEADER', this.props)}
+						<img src={this.props.user ? this.props.user.picture || this.props.user.gravatar : ''} />
+						{this.props.user
+							? this.props.user.name || this.props.user.email || this.props.user.id
+							: ''}{' '}
+						<i className="caret" />
 					</a>
 					<ul className="dropdown-menu">
 						<li>
@@ -101,11 +106,11 @@ class Header extends React.Component {
 									SALLES
 								</Link>
 							</li>*/}
-							<li>
+							{/*<li>
 								<Link to="/events" activeStyle={active}>
 									EVENEMENTS
 								</Link>
-							</li>
+							</li>*/}
 							<li>
 								<Link to="/buddies" activeStyle={active}>
 									BUDDIES

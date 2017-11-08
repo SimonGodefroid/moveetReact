@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactPaginate from 'react-paginate';
 class Pagination extends Component {
 	render() {
-		console.log('this', this.props);
 		return (
 			<div style={{ textAlign: 'center' }}>
 				<ReactPaginate
