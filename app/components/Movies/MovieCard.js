@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Poster from './Poster';
 import Button from '../Core/Button';
+import Runtime from '../Movies/Runtime';
+import ReleaseDate from '../Movies/ReleaseDate';
 import { Link } from 'react-router';
 
 const users = [
@@ -19,11 +21,6 @@ const users = [
 // Math.floor((Math.random() * 10) + 1);
 
 class MovieCard extends Component {
-	renderDate(movie) {
-		if (movie.release.releaseDate) {
-			return new Date(movie.release.releaseDate.toString()).toLocaleDateString('fr-FR');
-		}
-	}
 	renderCasting(movie) {
 		if (movie.castingShort && movie.castingShort.actors) {
 			return (
@@ -33,11 +30,6 @@ class MovieCard extends Component {
 				</div>
 			);
 		}
-	}
-	renderRuntime(movie) {
-		let hours = Math.floor(movie.runtime / 3600);
-		let mins = (movie.runtime - hours * 3600) / 60;
-		return <span>{`${hours}h ${mins}min`}</span>;
 	}
 	renderButton(text, icon, color, fn, arg1, arg2) {
 		return <Button text={text} icon={icon} color={color} onClickFn={fn} arg1={arg1} arg2={arg2} />;
@@ -52,7 +44,7 @@ class MovieCard extends Component {
 						<Poster url={movie.posterPath} height={'75%'} width={'20%'} />
 						<p className={css(styles.movieTitle)}>
 							{movie.originalTitle} <br />
-							{this.renderDate(movie)}, {this.renderRuntime(movie)}
+							{<ReleaseDate movie={movie} />}, {<Runtime movie={movie} />}
 						</p>
 						<div className={css(styles.movieCasting)}>{this.renderCasting(movie)}</div>
 						<p className={css(styles.movieSynopsis)}>{`${movie.synopsis.substring(0, 255)}...`}</p>

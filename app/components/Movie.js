@@ -3,9 +3,12 @@ import { StyleSheet, css } from 'aphrodite';
 import ScrollTop from './Core/ScrollTop';
 import ReactTooltip from 'react-tooltip';
 import Loader from './Core/Loader';
+import ReleaseDate from './Movies/ReleaseDate';
+import Runtime from './Movies/Runtime';
 import Tag from './Core/Tag';
 import Api from '../Api.js';
-class Movie extends Component {
+
+export default class Movie extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -32,8 +35,8 @@ class Movie extends Component {
 		return (
 			<div>
 				<p style={{ fontSize: '2em' }}>{movie.originalTitle}</p>
-				<p>Sortie: {this.renderDate(movie)}</p>
-				<p>{this.renderRuntime(movie)}</p>
+				<p>Sortie: {<ReleaseDate movie={movie} />}</p>
+				<p>{<Runtime movie={movie} />}</p>
 				<p>{this.renderGenre(movie)}</p>
 				{this.renderCasting(movie)}
 				<p>{movie.synopsis}</p>
@@ -74,53 +77,42 @@ class Movie extends Component {
 			);
 		}
 	}
-	renderDate(movie) {
-		if (movie.release.releaseDate) {
-			return new Date(movie.release.releaseDate.toString()).toLocaleDateString('fr-FR');
-		}
-	}
-	// 'rgb(224, 102, 102)';
-
-	renderRuntime(movie) {
-		let hours = Math.floor(movie.runtime / 3600);
-		let mins = (movie.runtime - hours * 3600) / 60;
-		return <span>Durée: {`${hours}h${mins}`}</span>;
-		return genreRes;
-	}
 
 	renderBubbles(buddies) {
-		const resBubbles = buddies.map((buddy, index) => {
-			// {
-			// 	this.renderTrailer(this.state.movie);
-			// }
-			return (
-				<div key={index}>
-					<a
-						key={index}
-						href={`/buddies/${buddy._id}`}
-						data-for="buddy"
-						data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
-						style={{ position: 'absolute', left: (index + 1) * 45 }}
-					>
-						<img
+		if (buddies.length > 0) {
+			const resBubbles = buddies.map((buddy, index) => {
+				// {
+				// 	this.renderTrailer(this.state.movie);
+				// }
+				return (
+					<div key={index}>
+						<a
 							key={index}
-							src={buddy.account.picture || 'http://via.placeholder.com/150x200'}
-							width={60}
-							height={60}
-							style={{
-								borderRadius: '50%',
-								position: 'absolute',
-								top: '10em',
-								// bottom: 100,
-								border: 'white 0.2em solid'
-								// left: (index + 1) * 40,
-							}}
-						/>
-					</a>
-				</div>
-			);
-		});
-		return resBubbles;
+							href={`/buddies/${buddy._id}`}
+							data-for="buddy"
+							data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
+							style={{ position: 'absolute', left: (index + 1) * 45 }}
+						>
+							<img
+								key={index}
+								src={buddy.account.picture || 'http://via.placeholder.com/150x200'}
+								width={60}
+								height={60}
+								style={{
+									borderRadius: '50%',
+									position: 'absolute',
+									top: '10em',
+									// bottom: 100,
+									border: 'white 0.2em solid'
+									// left: (index + 1) * 40,
+								}}
+							/>
+						</a>
+					</div>
+				);
+			});
+			return resBubbles;
+		}
 	}
 
 	render() {
@@ -170,22 +162,4 @@ class Movie extends Component {
 		}
 	}
 }
-const styles = StyleSheet.create({
-	tag: {
-		color: 'white',
-		backgroundColor: 'grey',
-		padding: '0.2em 0.4em',
-		margin: '0 0.3em 0 0',
-		borderRadius: '2em',
-		border: '0.1em grey solid'
-	},
-	hoverTag: {
-		':hover': {
-			color: 'grey',
-			backgroundColor: 'white',
-			border: '0.1em grey white'
-		}
-	}
-});
-
-export default Movie;
+const styles = StyleSheet.create({});

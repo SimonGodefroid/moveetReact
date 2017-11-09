@@ -49,6 +49,13 @@ const options = [
 	}
 ];
 
+const screenSize = {
+	smartphone: '@media only screen and (max-width: 479px)',
+	smartphoneLandscape: '@media only screen and (min-width: 480px) and (max-width:767px)',
+	tablet: '@media only screen and (min-width: 768px) and (max-width:991px)',
+	desktop: '@media only screen and (min-width: 992px)'
+};
+
 class Movies extends Component {
 	constructor(props) {
 		super(props);
@@ -72,6 +79,7 @@ class Movies extends Component {
 	}
 	componentDidMount() {
 		const title = this.props.pageTitle;
+		const { limit, page } = this.state;
 		Api.getAllNowShowingMovies(
 			json => {
 				this.setState({
@@ -82,8 +90,8 @@ class Movies extends Component {
 					pageCount: Math.floor(json.results / json.limit)
 				});
 			},
-			this.state.limit,
-			this.state.page,
+			limit,
+			page,
 			''
 		);
 		this.renderTags();
@@ -183,14 +191,8 @@ class Movies extends Component {
 	renderTags() {
 		return (
 			<div>
-				<Tag
-					label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
-					onClickFn={this.handleSortTitle}
-				/>
-				<Tag
-					label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
-					onClickFn={this.handleSortDate}
-				/>
+				<Tag label={'Tri Alpha ' + (sortAlpha === -1 ? 'A-Z' : 'Z-A')} onClickFn={this.handleSortTitle} />
+				<Tag label={'Date de Sortie ' + (sortDate === -1 ? '↑' : '↓')} onClickFn={this.handleSortDate} />
 			</div>
 		);
 	}
@@ -227,29 +229,22 @@ class Movies extends Component {
 	}
 
 	render() {
-		console.log('MOVIES state', this.state);
-		if (Object.keys(this.state.movies).length > 0) {
+		const { buddy } = this.props;
+		const { movies, forcePage, value, sortAlpha, sortDate, pageCount, results, total } = this.state;
+		if (Object.keys(movies).length > 0) {
 			return (
-				<div
-					className="container"
-					style={{
-						fontFamily: 'Quicksand'
-					}}
-				>
+				<div className="container" style={{ fontFamily: 'Quicksand' }}>
 					<div className="row">
-						<div style={{ height: '100vh' }}>
+						<div
+							style={{
+								// height: '100vh'
+							}}
+						>
 							<div className="section">
 								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
-									<div style={{}}>
-										<div
-											style={{
-												width: '40vw',
-												float: 'left',
-												display: 'inline-block',
-												zIndex: 2000
-											}}
-										>
+									<div>
+										<div className={css(styles.select)}>
 											<Select
 												closeOnSelect={false}
 												disabled={false}
@@ -259,45 +254,34 @@ class Movies extends Component {
 												removeSelected={true}
 												simpleValue
 												options={options}
-												value={this.state.value}
+												value={value}
 											/>
 										</div>
-										<div
-											style={{
-												paddingTop: '0.5em',
-												width: '20vw',
-												display: 'inline-block',
-												textAlign: 'center'
-											}}
-										>
+										<div className={css(styles.tagsContainer)}>
 											<Tag
-												label={'Tri Alpha ' + (this.state.sortAlpha === -1 ? 'A-Z' : 'Z-A')}
+												label={'Tri Alpha ' + (sortAlpha === -1 ? 'A-Z' : 'Z-A')}
 												onClickFn={this.handleSortTitle}
 											/>
 											<Tag
-												label={'Date de Sortie ' + (this.state.sortDate === -1 ? '↑' : '↓')}
+												label={'Date de Sortie ' + (sortDate === -1 ? '↑' : '↓')}
 												onClickFn={this.handleSortDate}
 											/>
 										</div>
 										<div className={css(styles.results)}>
-											{this.state.results} Résultats parmi {this.state.total} Films
+											{results} Résultats parmi {total} Films
 										</div>
 									</div>
 								</div>
 								<Pagination
-									pageCount={this.state.pageCount}
+									pageCount={pageCount}
 									handlePageClickFn={this.handlePageClick}
-									forcePage={this.state.forcePage}
+									forcePage={forcePage}
 								/>
 							</div>
-							{this.renderMovies(this.state.movies)}
+							{this.renderMovies(movies)}
 						</div>
 					</div>
-					<Pagination
-						pageCount={this.state.pageCount}
-						handlePageClickFn={this.handlePageClick}
-						forcePage={this.state.forcePage}
-					/>
+					<Pagination pageCount={pageCount} handlePageClickFn={this.handlePageClick} forcePage={forcePage} />
 					<ScrollTop />
 				</div>
 			);
@@ -308,6 +292,21 @@ class Movies extends Component {
 }
 
 const styles = StyleSheet.create({
+	tagsContainer: {
+		paddingTop: '0.5em',
+		width: '20vw',
+		display: 'inline-block',
+		textAlign: 'center',
+		[screenSize.smartphone]: {
+			backgroundColor: 'blue'
+		}
+	},
+	select: {
+		width: '40vw',
+		float: 'left',
+		display: 'inline-block',
+		zIndex: 2000
+	},
 	results: {
 		paddingTop: '0.5em',
 		width: '20vw',
