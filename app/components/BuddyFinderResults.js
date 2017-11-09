@@ -21,7 +21,6 @@ export default class BuddyFinderResults extends Component {
 	}
 
 	componentDidMount() {
-		console.log('this.props', this.props);
 		Api.findBuddy(
 			json => {
 				this.setState({
@@ -34,7 +33,6 @@ export default class BuddyFinderResults extends Component {
 	}
 
 	renderBuddies(arr) {
-		console.log('arr', arr);
 		if (!arr || arr.length === 0) {
 			return <Loader />;
 		}

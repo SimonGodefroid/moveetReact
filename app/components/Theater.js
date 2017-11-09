@@ -16,12 +16,10 @@ class Theater extends Component {
 				showtimes: json.message.feed.theaterShowtimes[0].movieShowtimes,
 				theater: json.message.feed.theaterShowtimes[0].place.theater
 			});
-			console.log('json', json.message);
 		}, this.props.location.search);
 	}
 
 	renderTheater(theater) {
-		console.log('theater', theater);
 		// 230x230
 		return (
 			<div>
@@ -34,7 +32,6 @@ class Theater extends Component {
 	}
 
 	renderShowtimes(showtimes) {
-		console.log('showtimes', showtimes);
 		const showRes = showtimes.map((showtime, index) => {
 			if (showtime.preview === 'false') {
 				return showtime.scr.map((dates, index2) => {
@@ -53,7 +50,6 @@ class Theater extends Component {
 		return showRes;
 	}
 	render() {
-		console.log('this.props', this.props.location.search);
 		if (Object.keys(this.state.theater).length > 0) {
 			return (
 				<div className="container" style={{ fontFamily: 'Quicksand' }}>

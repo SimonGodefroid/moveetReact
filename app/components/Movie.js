@@ -17,13 +17,11 @@ class Movie extends Component {
 	componentDidMount() {
 		Api.getMovieById(json => {
 			this.setState({ movie: json.message });
-			console.log('movie', json.message);
 		}, this.props.params.id);
 
 		Api.findBuddy(
 			json => {
 				this.setState({ buddies: json.message });
-				console.log('buddies', json.message);
 			},
 			'59f62899753f98989fd3250d',
 			this.props.params.id

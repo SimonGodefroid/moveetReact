@@ -4,11 +4,9 @@ const shows = showtimes.movieShowtimes;
 
 const showRes = shows.map((showtime, index) => {
 	let obj = {};
-	// console.log('showtime', showtime);
 	let dates = showtime.scr.map((date, index2) => {
 		return date;
 	});
-	console.log('dates array', dates);
 	showtime.scr.map((dates, index2) => {
 		obj.movie = showtime.onShow.movie;
 

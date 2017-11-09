@@ -46,7 +46,6 @@ export default class Buddies extends Component {
 	}
 
 	renderBuddies(arr, type) {
-		console.log('arr', arr);
 		if (!arr || arr.length === 0) {
 			return (
 				<div>

@@ -10,7 +10,6 @@ class Header extends React.Component {
 	}
 
 	render() {
-		console.log('this.props', this.props);
 		const active = { borderBottom: 'solid 0.02em white', lineHeight: '1em' };
 		const rightNav = this.props.token ? (
 			<ul

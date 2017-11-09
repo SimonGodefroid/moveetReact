@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import ScrollTop from './Core/ScrollTop';
 import Loader from './Core/Loader';
@@ -70,7 +71,6 @@ class Movies extends Component {
 		this.handlePageClick = this.handlePageClick.bind(this);
 	}
 	componentDidMount() {
-		console.log('this.props.user @MOVIES', this.props.user);
 		const title = this.props.pageTitle;
 		Api.getAllNowShowingMovies(
 			json => {
@@ -135,7 +135,6 @@ class Movies extends Component {
 	}
 
 	handleSelectChange(value) {
-		console.log("You've selected:", value);
 		this.setState({
 			value: value
 		});
@@ -157,7 +156,6 @@ class Movies extends Component {
 	}
 
 	handlePageClick(data) {
-		console.log('coucou data', data);
 		let selected = data.selected + 1;
 		this.setState(
 			{ page: selected, forcePage: selected - 1 },
@@ -229,6 +227,7 @@ class Movies extends Component {
 	}
 
 	render() {
+		console.log('MOVIES state', this.state);
 		if (Object.keys(this.state.movies).length > 0) {
 			return (
 				<div
@@ -322,4 +321,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Movies;
+const mapStateToProps = state => {
+	return {
+		token: state.auth.token,
+		user: state.auth.user
+	};
+};
+
+export default connect(mapStateToProps)(Movies);
