@@ -49,19 +49,6 @@ const options = [
 	}
 ];
 
-const screenSize = {
-	// media queries in px
-	smartphone: '@media only screen and (max-width: 479px)',
-	smartphoneLandscape: '@media only screen and (min-width: 480px) and (max-width:767px)',
-	tablet: '@media only screen and (min-width: 768px) and (max-width:991px)',
-	desktop: '@media only screen and (min-width: 992px)',
-	// media queries in em base 16px
-	smartphoneEm: '@media only screen and (max-width: 29.9375em)',
-	smartphoneLandscapeEm: '@media only screen and (min-width: 30em) and (max-width:47.9375em)',
-	tabletEm: '@media only screen and (min-width: 48em) and (max-width:61.9375em)',
-	desktopEm: '@media only screen and (min-width: 62em)'
-};
-
 class Movies extends Component {
 	constructor(props) {
 		super(props);
@@ -239,18 +226,14 @@ class Movies extends Component {
 		const { movies, forcePage, value, sortAlpha, sortDate, pageCount, results, total } = this.state;
 		if (Object.keys(movies).length > 0) {
 			return (
-				<div className="container" style={{ fontFamily: 'Quicksand' }}>
+				<div className="container" style={{ fontFamily: 'Barlow' }}>
 					<div className="row">
-						<div
-							style={{
-								// height: '100vh'
-							}}
-						>
+						<div>
 							<div className="section">
+								<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
 								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
-									<div>
-										<div className={css(styles.select)}>
+									<div className={`row`}>
+										<div className={`${css(styles.select)} col-xs-12 col-sm-12 col-md-4 col-lg-4`}>
 											<Select
 												closeOnSelect={false}
 												disabled={false}
@@ -263,7 +246,7 @@ class Movies extends Component {
 												value={value}
 											/>
 										</div>
-										<div className={css(styles.tagsContainer)}>
+										<div className={`hidden-xs hidden-sm hidden-md hidden-lg`}>
 											<Tag
 												label={'Tri Alpha ' + (sortAlpha === -1 ? 'A-Z' : 'Z-A')}
 												onClickFn={this.handleSortTitle}
@@ -273,21 +256,29 @@ class Movies extends Component {
 												onClickFn={this.handleSortDate}
 											/>
 										</div>
-										<div className={css(styles.results)}>
+										<div className={`${css(styles.pagination)} col-md-4 col-lg-4`}>
+											<Pagination
+												pageCount={pageCount}
+												handlePageClickFn={this.handlePageClick}
+												forcePage={forcePage}
+											/>
+										</div>
+										<div className={`${css(styles.results)} col-xs-12 col-sm-12 col-md-3`}>
 											{results} Résultats parmi {total} Films
 										</div>
 									</div>
 								</div>
-								<Pagination
-									pageCount={pageCount}
-									handlePageClickFn={this.handlePageClick}
-									forcePage={forcePage}
-								/>
 							</div>
 							{this.renderMovies(movies)}
 						</div>
 					</div>
-					<Pagination pageCount={pageCount} handlePageClickFn={this.handlePageClick} forcePage={forcePage} />
+					<div className={`${css(styles.pagination)} col-xs-12`}>
+						<Pagination
+							pageCount={pageCount}
+							handlePageClickFn={this.handlePageClick}
+							forcePage={forcePage}
+						/>
+					</div>
 					<ScrollTop />
 				</div>
 			);
@@ -298,31 +289,21 @@ class Movies extends Component {
 }
 
 const styles = StyleSheet.create({
-	tagsContainer: {
-		paddingTop: '0.5em',
-		width: '20vw',
-		display: 'inline-block',
-		textAlign: 'center',
-		[screenSize.smartphone]: {
-			backgroundColor: 'blue'
-		}
-	},
 	select: {
-		width: '40vw',
-		float: 'left',
-		display: 'inline-block',
-		zIndex: 2000
+		zIndex: 1000,
+		marginBottom: '1em'
 	},
+	pagination: { marginBottom: '1em' },
 	results: {
-		paddingTop: '0.5em',
-		width: '20vw',
-		float: 'right',
+		// paddingTop: '0.5em',
+		position: 'absolute',
 		textAlign: 'right',
-		display: 'inline-block'
+		right: 0,
+		marginBottom: '1em'
 	},
 	header: {
 		textAlign: 'center',
-		height: '20vh'
+		height: '10vh'
 	}
 });
 

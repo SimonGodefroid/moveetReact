@@ -118,8 +118,7 @@ const styles = StyleSheet.create({
 	border: { border: '0.1em black solid' },
 	informationsHolder: {},
 	root: {
-		fontFamily: 'Quicksand'
-		// height: '100vh'
+		fontFamily: 'Barlow'
 	},
 	leftPanel: {
 		padding: 20,

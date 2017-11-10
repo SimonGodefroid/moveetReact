@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactPaginate from 'react-paginate';
-class Pagination extends Component {
+export default class Pagination extends Component {
 	render() {
 		return (
 			<div style={{ textAlign: 'center' }}>
@@ -10,8 +10,8 @@ class Pagination extends Component {
 					breakLabel={<a>...</a>}
 					breakClassName={'break-me'}
 					pageCount={this.props.pageCount}
-					marginPagesDisplayed={2}
-					pageRangeDisplayed={5}
+					marginPagesDisplayed={1}
+					pageRangeDisplayed={3}
 					onPageChange={data => {
 						this.props.handlePageClickFn(data);
 					}}
@@ -24,5 +24,3 @@ class Pagination extends Component {
 		);
 	}
 }
-
-export default Pagination;

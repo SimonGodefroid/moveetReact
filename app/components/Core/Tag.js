@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+export default class Tag extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			label: this.props.label
+		};
+	}
+	render() {
+		return (
+			<span
+				key={this.props.index}
+				className={`${css(styles.tag, styles.hoverTag)}`}
+				onClick={() => {
+					this.props.onClickFn();
+				}}
+			>
+				{this.props.label}
+			</span>
+		);
+	}
+}
+
 const styles = StyleSheet.create({
 	tag: {
 		color: 'white',
@@ -19,27 +41,3 @@ const styles = StyleSheet.create({
 		}
 	}
 });
-
-class Tag extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			label: this.props.label
-		};
-	}
-	render() {
-		return (
-			<span
-				key={this.props.index}
-				className={css(styles.tag, styles.hoverTag)}
-				onClick={() => {
-					this.props.onClickFn();
-				}}
-			>
-				{this.props.label}
-			</span>
-		);
-	}
-}
-
-export default Tag;

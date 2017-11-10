@@ -19,39 +19,51 @@ export default class MovieCard extends Component {
 		return (
 			<div>
 				<Link to={`/movies/${movie._id}`}>
-					<div className={css(styles.movieCard, styles.hover)}>
-						<Poster url={movie.posterPath} height={'75%'} width={'20%'} />
-						<p className={css(styles.movieTitle)}>
-							<Title title={movie.originalTitle} /> <br />
-							<ReleaseDate releaseDate={movie.release.releaseDate} />
-							<Runtime runtime={movie.runtime} />
-						</p>
-						<div className={css(styles.movieCasting)}>
-							<Casting casting={movie.castingShort} />
-						</div>
-						<div className={css(styles.movieSynopsis)}>
-							<Synopsis synopsis={movie.synopsis} />
+					<div className={`${css(styles.movieCard, styles.hover)} row`}>
+						<div>
+							<div className={`col-xs-4 col-sm-2 col-md-2 col-lg-2`}>
+								<Poster url={movie.posterPath} />
+							</div>
+							<div className={`${css(styles.movieInfo)} col-md-7 col-lg-7`}>
+								<p className={`${css(styles.movieTitle)}`}>
+									<Title title={movie.originalTitle} /> <br />
+									<span className={`hidden-xs`}>
+										<ReleaseDate releaseDate={movie.release.releaseDate} />
+									</span>
+									<span className={`hidden-xs`}>
+										<Runtime runtime={movie.runtime} />
+									</span>
+								</p>
+								<div className={`${css(styles.movieCasting)}`}>
+									<Casting casting={movie.castingShort} />
+								</div>
+								<div className={`${css(styles.movieSynopsis)} hidden-xs`}>
+									<Synopsis synopsis={movie.synopsis} length={370} />
+								</div>
+							</div>
 						</div>
 					</div>
 				</Link>
-				<div className={css(styles.buttonsContainer)}>
-					<Link to={{ pathname: `/findbuddy/${movie._id}`, search: `${movie.originalTitle}` }}>
-						<Button text={'Buddy Finder'} icon={'search'} color={'black'} onClickFn={() => {}} />
-					</Link>
-					<Button
-						text={'Watchlist'}
-						icon={'plus'}
-						color={'rgba(100,255,200,0.9)'}
-						onClickFn={this.props.onClickFn}
-						arg1={'59f62899753f98989fd3250d'}
-						arg2={movie._id}
-					/>
-					{movie.hasShowtime === 1
-						? this.renderButton('Séances', 'clock-o', 'rgba(100,200,255,0.9)', '', movie._id, '')
-						: ''}
-					{movie.hasPreview === 1 || movie.statusList === 'nowshowing'
-						? this.renderButton('Bande Annonce', 'play-circle', 'red', '', movie._id, '')
-						: ''}
+				<div className={`row`}>
+					<div className={`${css(styles.buttonsContainer)} hidden-xs hidden-sm`}>
+						<Link to={{ pathname: `/findbuddy/${movie._id}`, search: `${movie.originalTitle}` }}>
+							<Button text={'Buddy Finder'} icon={'search'} color={'black'} onClickFn={() => {}} />
+						</Link>
+						<Button
+							text={'Watchlist'}
+							icon={'plus'}
+							color={'rgba(100,255,200,0.9)'}
+							onClickFn={this.props.onClickFn}
+							arg1={'59f62899753f98989fd3250d'}
+							arg2={movie._id}
+						/>
+						{movie.hasShowtime === 1
+							? this.renderButton('Séances', 'clock-o', 'rgba(100,200,255,0.9)', '', movie._id, '')
+							: ''}
+						{movie.hasPreview === 1 || movie.statusList === 'nowshowing'
+							? this.renderButton('Bande Annonce', 'play-circle', 'red', '', movie._id, '')
+							: ''}
+					</div>
 				</div>
 			</div>
 		);
@@ -63,34 +75,29 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		color: 'black',
 		margin: '1em 0',
-		width: '90vw',
-		padding: '1em'
+		padding: '1em',
+		minHeight: '240px'
 	},
-	buttonsContainer: {
-		position: 'absolute',
-		top: '10%',
-		right: '0',
-		alignItems: 'center',
-		display: 'inline',
-		width: '16em'
+	movieInfo: {
+		color: 'black'
 	},
 	movieTitle: {
-		position: 'absolute',
-		top: '8%',
-		left: '24vw',
 		fontSize: '1.2em'
 	},
 	movieCasting: {
 		position: 'absolute',
-		top: '30%',
-		left: '24vw',
-		width: '50vw'
+		top: '4em'
 	},
 	movieSynopsis: {
 		position: 'absolute',
-		top: '50%',
-		left: '24vw',
-		width: '45vw'
+		top: '8em',
+		paddingBottom: '1em'
+	},
+	buttonsContainer: {
+		padding: '1em',
+		position: 'absolute',
+		top: '1em',
+		right: '1em'
 	},
 	hover: {
 		':hover': {

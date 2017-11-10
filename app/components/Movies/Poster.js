@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 export default class Poster extends Component {
+	// 216x 288
 	addDefaultSrc(event) {
-		event.target.src = 'http://placehold.it/150x200/92c952';
+		event.target.src = 'http://via.placeholder.com/150x200/000000/ffffff/?text=Moveet';
 	}
 	render() {
 		const { url, height, width, style, alt } = this.props;
