@@ -2,35 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Poster from './Poster';
 import Button from '../Core/Button';
+import Title from '../Movies/Title';
 import Runtime from '../Movies/Runtime';
 import ReleaseDate from '../Movies/ReleaseDate';
+import Casting from '../Movies/Casting';
+import Synopsis from '../Movies/Synopsis';
 import { Link } from 'react-router';
 
-const users = [
-	'59f62899753f98989fd32511',
-	'59f62899753f98989fd3250d',
-	'59f62899753f98989fd3250f',
-	'59f62899753f98989fd32514',
-	'59f62899753f98989fd32515',
-	'59f62899753f98989fd32510',
-	'59f62899753f98989fd32516',
-	'59f62899753f98989fd32513',
-	'59f62899753f98989fd3250e'
-];
-
-// Math.floor((Math.random() * 10) + 1);
-
-class MovieCard extends Component {
-	renderCasting(movie) {
-		if (movie.castingShort && movie.castingShort.actors) {
-			return (
-				<div>
-					<p>De: {movie.castingShort['directors']}</p>
-					<p>Avec: {`${movie.castingShort['actors'].substring(0, 83)}...`}</p>
-				</div>
-			);
-		}
-	}
+export default class MovieCard extends Component {
 	renderButton(text, icon, color, fn, arg1, arg2) {
 		return <Button text={text} icon={icon} color={color} onClickFn={fn} arg1={arg1} arg2={arg2} />;
 	}
@@ -43,11 +22,16 @@ class MovieCard extends Component {
 					<div className={css(styles.movieCard, styles.hover)}>
 						<Poster url={movie.posterPath} height={'75%'} width={'20%'} />
 						<p className={css(styles.movieTitle)}>
-							{movie.originalTitle} <br />
-							{<ReleaseDate movie={movie} />}, {<Runtime movie={movie} />}
+							<Title title={movie.originalTitle} /> <br />
+							<ReleaseDate releaseDate={movie.release.releaseDate} />
+							<Runtime runtime={movie.runtime} />
 						</p>
-						<div className={css(styles.movieCasting)}>{this.renderCasting(movie)}</div>
-						<p className={css(styles.movieSynopsis)}>{`${movie.synopsis.substring(0, 255)}...`}</p>
+						<div className={css(styles.movieCasting)}>
+							<Casting casting={movie.castingShort} />
+						</div>
+						<div className={css(styles.movieSynopsis)}>
+							<Synopsis synopsis={movie.synopsis} />
+						</div>
 					</div>
 				</Link>
 				<div className={css(styles.buttonsContainer)}>
@@ -115,4 +99,3 @@ const styles = StyleSheet.create({
 		}
 	}
 });
-export default MovieCard;

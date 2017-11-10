@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 
-class Poster extends Component {
+export default class Poster extends Component {
+	addDefaultSrc(event) {
+		event.target.src = 'http://placehold.it/150x200/92c952';
+	}
 	render() {
+		const { url, height, width, style, alt } = this.props;
 		return (
 			<img
-				src={this.props.url}
-				height={this.props.height || '200'}
-				width={this.props.width || '150'}
-				style={this.props.style}
+				className={'img-responsive'}
+				src={url}
+				onError={this.addDefaultSrc}
+				height={height}
+				width={`${width}px`}
+				style={style}
+				alt={alt || ''}
 			/>
 		);
 	}
 }
-
-export default Poster;

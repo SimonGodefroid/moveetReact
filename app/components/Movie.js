@@ -3,8 +3,14 @@ import { StyleSheet, css } from 'aphrodite';
 import ScrollTop from './Core/ScrollTop';
 import ReactTooltip from 'react-tooltip';
 import Loader from './Core/Loader';
+import Bubbles from './Buddies/Bubbles';
+import Poster from './Movies/Poster';
+import Title from './Movies/Title';
 import ReleaseDate from './Movies/ReleaseDate';
 import Runtime from './Movies/Runtime';
+import Casting from './Movies/Casting';
+import Synopsis from './Movies/Synopsis';
+import Trailer from './Movies/Trailer';
 import Tag from './Core/Tag';
 import Api from '../Api.js';
 
@@ -33,28 +39,29 @@ export default class Movie extends Component {
 
 	renderMovie(movie) {
 		return (
-			<div>
-				<p style={{ fontSize: '2em' }}>{movie.originalTitle}</p>
-				<p>Sortie: {<ReleaseDate movie={movie} />}</p>
-				<p>{<Runtime movie={movie} />}</p>
-				<p>{this.renderGenre(movie)}</p>
-				{this.renderCasting(movie)}
-				<p>{movie.synopsis}</p>
+			<div className={`row`}>
+				<div className={`${css(styles.posterHolder)} col-xs-12 col-sm-6 col-md-4`}>
+					<Poster url={movie.posterPath} />
+				</div>
+				<div className={`${css(styles.informationsHolder)} col-xs-12 col-sm-6 col-md-8`}>
+					<div className={css(styles.title)}>
+						<Title title={movie.originalTitle} />
+					</div>
+					<div>
+						<p>
+							<ReleaseDate releaseDate={movie.release.releaseDate} />
+							<Runtime runtime={movie.runtime} />
+						</p>
+					</div>
+					<div>
+						<Casting casting={movie.castingShort} length={100} />
+					</div>
+					<div>
+						<Synopsis synopsis={movie.synopsis} />
+					</div>
+				</div>
 			</div>
 		);
-	}
-	renderTrailer(movie) {
-		if (movie.hasPreview === 1) {
-			let url = movie.trailerEmbed;
-			let endUrl = url.search('</iframe>');
-			let urlTrailer =
-				url.substring(0, endUrl + 9).replace("<div id='ACEmbed'>", "<div id='blogvision'>") + '</div>';
-			return (
-				<div style={{ textAlign: 'center' }}>
-					<div dangerouslySetInnerHTML={{ __html: urlTrailer }} />
-				</div>
-			);
-		}
 	}
 
 	renderGenre(movie) {
@@ -67,84 +74,28 @@ export default class Movie extends Component {
 		});
 		return genreRes;
 	}
-	renderCasting(movie) {
-		if (movie.castingShort) {
-			return (
-				<div>
-					<p>Réalisateur: {movie.castingShort['directors']}</p>
-					<p>Acteurs: {movie.castingShort['actors']}</p>
-				</div>
-			);
-		}
-	}
-
-	renderBubbles(buddies) {
-		if (buddies.length > 0) {
-			const resBubbles = buddies.map((buddy, index) => {
-				// {
-				// 	this.renderTrailer(this.state.movie);
-				// }
-				return (
-					<div key={index}>
-						<a
-							key={index}
-							href={`/buddies/${buddy._id}`}
-							data-for="buddy"
-							data-tip={`${buddy.account.username}<br />${buddy.account.age}`}
-							style={{ position: 'absolute', left: (index + 1) * 45 }}
-						>
-							<img
-								key={index}
-								src={buddy.account.picture || 'http://via.placeholder.com/150x200'}
-								width={60}
-								height={60}
-								style={{
-									borderRadius: '50%',
-									position: 'absolute',
-									top: '10em',
-									// bottom: 100,
-									border: 'white 0.2em solid'
-									// left: (index + 1) * 40,
-								}}
-							/>
-						</a>
-					</div>
-				);
-			});
-			return resBubbles;
-		}
-	}
 
 	render() {
-		if (Object.keys(this.state.movie).length > 0) {
+		const { buddies, movie } = this.state;
+		if (Object.keys(movie).length > 0) {
 			return (
-				<div className="container" style={{ fontFamily: 'Quicksand' }}>
+				<div className={`${css(styles.root)} container`}>
 					<div className="row">
-						<div
-							style={{
-								height: '90vh',
-								marginTop: 55,
-								width: '60vw',
-								border: '0.1em black solid',
-								float: 'left'
-							}}
-						>
-							{this.renderMovie(this.state.movie)}
-							{this.renderTrailer(this.state.movie)}
+						<div className={`${css(styles.leftPanel)} col-md-8 col-lg-8 col-sm-12`}>
+							{this.renderMovie(movie)}
+							{/*<Trailer movie={movie} />*/}
 						</div>
-						<div
-							style={{
-								height: '90vh',
-								marginTop: 55,
-								width: '30vw',
-								border: '0.1em black solid',
-								float: 'right',
-								position: 'relative'
-							}}
-						>
-							Ils veulent voir ce film
-							{this.renderBubbles(this.state.buddies)}
+						<div className={`${css(styles.rightPanel)} col-md-4 col-lg-4 col-sm-12 col-xs-12`}>
+							<Bubbles buddies={buddies} />
 						</div>
+					</div>
+					<div className={`${css(styles.border, styles.showtimes)} row`}>
+						<h2>Showtimes</h2>
+						<p>Coucou</p>
+						<p>Coucou</p>
+						<p>Coucou</p>
+						<p>Coucou</p>
+						<p>Coucou</p>
 					</div>
 					<ReactTooltip
 						id="buddy"
@@ -162,4 +113,23 @@ export default class Movie extends Component {
 		}
 	}
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	posterHolder: {},
+	border: { border: '0.1em black solid' },
+	informationsHolder: {},
+	root: {
+		fontFamily: 'Quicksand'
+		// height: '100vh'
+	},
+	leftPanel: {
+		padding: 20,
+		border: '0.1em black solid'
+	},
+	title: { fontSize: '2em' },
+	rightPanel: {
+		padding: 20,
+		// height: '100%',
+		border: '0.1em black solid'
+	},
+	showtimes: { padding: 20 }
+});
