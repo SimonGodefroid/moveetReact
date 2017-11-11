@@ -8,6 +8,7 @@ import ReleaseDate from '../Movies/ReleaseDate';
 import Casting from '../Movies/Casting';
 import Synopsis from '../Movies/Synopsis';
 import { Link } from 'react-router';
+import Global from '../../../Global';
 
 export default class MovieCard extends Component {
 	renderButton(text, icon, color, fn, arg1, arg2) {
@@ -24,9 +25,9 @@ export default class MovieCard extends Component {
 							<div className={`col-xs-4 col-sm-2 col-md-2 col-lg-2`}>
 								<Poster url={movie.posterPath} />
 							</div>
-							<div className={`${css(styles.movieInfo)} col-md-7 col-lg-7`}>
+							<div className={`${css(styles.movieInfo)} col-xs-8 col-sm-10 col-md-7 col-lg-7`}>
 								<p className={`${css(styles.movieTitle)}`}>
-									<Title title={movie.originalTitle} /> <br />
+									<Title title={movie.originalTitle} full={false} /> <br />
 									<span className={`hidden-xs`}>
 										<ReleaseDate releaseDate={movie.release.releaseDate} />
 									</span>
@@ -65,6 +66,26 @@ export default class MovieCard extends Component {
 							: ''}
 					</div>
 				</div>
+				<div className={`row`}>
+					<div className={`${css(styles.buttonsContainerResponsive)}  col-xs-8 col-sm-8 hidden-md hidden-lg`}>
+						<Link to={{ pathname: `/findbuddy/${movie._id}`, search: `${movie.originalTitle}` }}>
+							<Button text={''} icon={'search'} color={'black'} onClickFn={() => {}} />
+						</Link>
+						<Button
+							icon={'plus'}
+							color={'rgba(100,255,200,0.9)'}
+							onClickFn={this.props.onClickFn}
+							arg1={'59f62899753f98989fd3250d'}
+							arg2={movie._id}
+						/>
+						{movie.hasShowtime === 1
+							? this.renderButton('', 'clock-o', 'rgba(100,200,255,0.9)', '', movie._id, '')
+							: ''}
+						{movie.hasPreview === 1 || movie.statusList === 'nowshowing'
+							? this.renderButton('', 'play-circle', 'red', '', movie._id, '')
+							: ''}
+					</div>
+				</div>
 			</div>
 		);
 	}
@@ -98,6 +119,25 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		top: '1em',
 		right: '1em'
+	},
+	buttonsContainerResponsive: {
+		[Global.screenSize.smartphoneEm]: {
+			padding: '1em',
+			position: 'absolute',
+			top: '70%',
+			textAlign: 'center'
+		},
+		[Global.screenSize.smartphoneLandscapeEm]: {
+			padding: '1em',
+			position: 'absolute',
+			top: '70% !important',
+			textAlign: 'center'
+		},
+		padding: '1em',
+		position: 'absolute',
+		top: '1em',
+		right: '1em',
+		textAlign: 'center'
 	},
 	hover: {
 		':hover': {

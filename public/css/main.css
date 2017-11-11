@@ -117,6 +117,15 @@ footer {
 /* Navbar
 /* ------------------------- */
 
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+	color: rgb(255, 203, 48);
+	/* color: black; */
+}
+.navbar-inverse .navbar-nav > li > a {
+	color: white;
+}
+
 .navbar-default {
 	background-color: #fff;
 	border-color: #e0e0e0;
@@ -154,6 +163,23 @@ footer {
 	border-bottom-color: #3f51b5;
 	background-color: transparent;
 	color: #262626;
+}
+
+.navbar-inverse {
+	/* background-color: rgb(255, 86, 48) !important;
+	border-color: rgb(255, 86, 48) !important; */
+	background-color: black !important;
+	border-color: black !important;
+}
+
+.navbar-inverse .navbar-brand {
+	color: white;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+	color: rgb(255, 203, 48);
+	/* color: black; */
 }
 
 /* Panels

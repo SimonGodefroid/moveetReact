@@ -9,6 +9,7 @@ import ReactTooltip from 'react-tooltip';
 import Pagination from './Core/Pagination';
 import Select from 'react-select';
 import Api from '../Api.js';
+import Global from '../../Global.js';
 
 const options = [
 	{
@@ -232,7 +233,7 @@ class Movies extends Component {
 							<div className="section">
 								<h3 className={`${css(styles.header)} section-heading`}>FILMS</h3>
 								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<div className={`row`}>
+									<div className={`${css(styles.controls)} row`}>
 										<div className={`${css(styles.select)} col-xs-12 col-sm-12 col-md-4 col-lg-4`}>
 											<Select
 												closeOnSelect={false}
@@ -289,6 +290,11 @@ class Movies extends Component {
 }
 
 const styles = StyleSheet.create({
+	controls: {
+		[Global.screenSize.smartphoneEm]: {
+			marginBottom: '1em'
+		}
+	},
 	select: {
 		zIndex: 1000,
 		marginBottom: '1em'
@@ -299,7 +305,11 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		textAlign: 'right',
 		right: 0,
-		marginBottom: '1em'
+		marginBottom: '1em',
+		[Global.screenSize.smartphoneEm]: {
+			textAlign: 'center'
+			// marginBottom: '1vw'
+		}
 	},
 	header: {
 		textAlign: 'center',

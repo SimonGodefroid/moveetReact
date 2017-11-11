@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-
+import Global from '../../../Global';
 export default class Button extends Component {
 	render() {
 		return (
@@ -9,7 +9,7 @@ export default class Button extends Component {
 				onClick={() => {
 					this.props.onClickFn(this.props.arg1, this.props.arg2);
 				}}
-				style={{ color: this.props.color, border: `${this.props.color} 0.1em solid` }}
+				style={{ color: this.props.color, border: `${this.props.color} 0.1em solid`, width: this.props.width }}
 			>
 				<i className={`fa fa-${this.props.icon}`} aria-hidden="true" />{' '}
 				<span style={{ textAlign: 'justify' }}>
@@ -23,12 +23,24 @@ export default class Button extends Component {
 const styles = StyleSheet.create({
 	button: {
 		marginTop: '1vw',
-		width: '15vw',
+		// width: '15vw',
 		borderRadius: '2em',
 		backgroundColor: 'white',
 		display: 'block',
 		textAlign: 'center',
-		boxSizing: 'border-box'
+		boxSizing: 'border-box',
+		[Global.screenSize.smartphoneEm]: {
+			display: 'inline',
+			margin: '1vw'
+		},
+		[Global.screenSize.smartphoneLandscapeEm]: {
+			display: 'inline',
+			margin: '1vw'
+		},
+		[Global.screenSize.tabletEm]: {
+			display: 'inline',
+			margin: '1vw'
+		}
 	},
 	hoverButton: {
 		':hover': {
