@@ -65,9 +65,10 @@ export default class MovieCard extends Component {
 							? this.renderButton('Bande Annonce', 'play-circle', 'red', '', movie._id, '')
 							: ''}
 					</div>
-				</div>
-				<div className={`row`}>
-					<div className={`${css(styles.buttonsContainerResponsive)}  col-xs-8 col-sm-8 hidden-md hidden-lg`}>
+					<div className={`col-xs-8`} />
+					<div
+						className={`${css(styles.buttonsContainerResponsive)}  col-xs-12 col-sm-6 hidden-md hidden-lg`}
+					>
 						<Link to={{ pathname: `/findbuddy/${movie._id}`, search: `${movie.originalTitle}` }}>
 							<Button text={''} icon={'search'} color={'black'} onClickFn={() => {}} />
 						</Link>
@@ -97,7 +98,10 @@ const styles = StyleSheet.create({
 		color: 'black',
 		margin: '1em 0',
 		padding: '1em',
-		minHeight: '240px'
+		minHeight: '240px',
+		[Global.screenSize.smartphoneEm]: {
+			padding: '1em 0em'
+		}
 	},
 	movieInfo: {
 		color: 'black'
@@ -121,22 +125,29 @@ const styles = StyleSheet.create({
 		right: '1em'
 	},
 	buttonsContainerResponsive: {
-		[Global.screenSize.smartphoneEm]: {
-			padding: '1em',
+		[Global.screenSize.tablet]: {
+			// backgroundColor: 'green',
 			position: 'absolute',
-			top: '70%',
+			// top: '70% !important',
+			right: '1em',
 			textAlign: 'center'
 		},
 		[Global.screenSize.smartphoneLandscapeEm]: {
-			padding: '1em',
+			// backgroundColor: 'red',
 			position: 'absolute',
 			top: '70% !important',
+			textAlign: 'center'
+		},
+		[Global.screenSize.smartphoneEm]: {
+			// backgroundColor: 'orange',
+			position: 'absolute',
+			top: '70%',
 			textAlign: 'center'
 		},
 		padding: '1em',
 		position: 'absolute',
 		top: '1em',
-		right: '1em',
+		// right: '1em',
 		textAlign: 'center'
 	},
 	hover: {
