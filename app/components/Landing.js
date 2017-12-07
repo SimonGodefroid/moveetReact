@@ -50,11 +50,13 @@ class Landing extends Component {
 					}}
 				>
 					<div className="row" style={{ height: '100vh', fontFamily: 'Barlow' }}>
-						<h3>Bienvenue sur Moveet, là où les passionnés de cinéma se rencontrent</h3>
-						<p>Explorez les films pour trouver d'autres passionnés avec qui les voir</p>
-						<Slider dots={true} infinite={true} speed={500} slidesToShow={10} slidesToScroll={1}>
-							{this.renderMovies()}
-						</Slider>
+						<div className={`col-lg-8`}>
+							<h3>Bienvenue sur Moveet, là où les passionnés de cinéma se rencontrent</h3>
+							<p>Explorez les films pour trouver d'autres passionnés avec qui les voir</p>
+							<Slider dots={true} infinite={true} speed={500} slidesToShow={10} slidesToScroll={1}>
+								{this.renderMovies()}
+							</Slider>
+						</div>
 					</div>
 				</div>
 			);
