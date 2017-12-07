@@ -10,7 +10,7 @@ class Header extends React.Component {
 	}
 
 	render() {
-		const active = { borderBottom: 'solid 0.02em white', lineHeight: '1em' };
+		const active = { paddingTop: '1.6em', borderBottom: 'solid 0.02em white', lineHeight: '0.3em' };
 		const rightNav = this.props.token ? (
 			<ul
 				className="nav navbar-nav navbar-right"
@@ -62,10 +62,10 @@ class Header extends React.Component {
 				style={{
 					backgroundColor: 'black',
 					color: 'white',
-					borderWidth: '0 0 4px 0',
+					// borderWidth: '0 0 4px 0',
 					textAlign: 'center',
 					fontFamily: 'Josefin Sans',
-					fontSize: '1.2em'
+					fontSize: '1em'
 				}}
 			>
 				<div className="container-fluid">
@@ -81,7 +81,7 @@ class Header extends React.Component {
 							<span className="icon-bar" />
 							<span className="icon-bar" />
 						</button>
-						<IndexLink to="/" className="navbar-brand">
+						<IndexLink to="/" className="navbar-brand" style={{ fontSize: '2em' }}>
 							MOVEET
 						</IndexLink>
 					</div>

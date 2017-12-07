@@ -12,7 +12,8 @@ import Casting from './Movies/Casting';
 import Synopsis from './Movies/Synopsis';
 import Trailer from './Movies/Trailer';
 import Tag from './Core/Tag';
-import Api from '../Api.js';
+import Api from '../Api';
+import Global from '../../Global';
 
 export default class Movie extends Component {
 	constructor(props) {
@@ -47,7 +48,7 @@ export default class Movie extends Component {
 					<div className={css(styles.title)}>
 						<Title title={movie.originalTitle} />
 					</div>
-					<div>
+					<div className={`${css(styles.dateRuntime)}`}>
 						<p>
 							<ReleaseDate releaseDate={movie.release.releaseDate} />
 							<Runtime runtime={movie.runtime} />
@@ -89,13 +90,53 @@ export default class Movie extends Component {
 							<Bubbles buddies={buddies} />
 						</div>
 					</div>
+					<div className={`${css(styles.border)} row`}>
+						<div
+							className={`${css(styles.border)} col-md-6 col-lg-6`}
+							style={{ textAlign: 'center', height: '20vh' }}
+						>
+							<p>Bande Annonce</p>
+							<p>WIP</p>
+						</div>
+						<div
+							className={`${css(styles.border)} col-md-6 col-lg-6`}
+							style={{ textAlign: 'center', height: '20vh' }}
+						>
+							<p>
+								{!movie.statistics.userRating
+									? ''
+									: `Note Utilisateurs: ${movie.statistics.userRating}`}
+							</p>
+							<p>
+								{!movie.statistics.userRatingCount
+									? ''
+									: `Nombre de votants ${movie.statistics.userRatingCount}`}
+							</p>
+							<p>
+								{!movie.statistics.pressReviewCount
+									? ''
+									: `Note Presse ${movie.statistics.pressReviewCount}`}
+							</p>
+							<p>
+								{!movie.statistics.userReviewCount
+									? ''
+									: `Nombre de Critiques ${movie.statistics.userReviewCount}`}
+							</p>
+							<p>
+								{!movie.statistics.rankTopMovie
+									? ''
+									: `Rang Meilleurs Films ${movie.statistics.rankTopMovie}`}
+							</p>
+							<p>
+								{!movie.statistics.theaterCount
+									? ''
+									: `Nombre de Cinémas ${movie.statistics.theaterCount}`}
+							</p>
+						</div>
+					</div>
 					<div className={`${css(styles.border, styles.showtimes)} row`}>
-						<h2>Showtimes</h2>
-						<p>Coucou</p>
-						<p>Coucou</p>
-						<p>Coucou</p>
-						<p>Coucou</p>
-						<p>Coucou</p>
+						<h2>Séances</h2>
+						<p>WIP</p>
 					</div>
 					<ReactTooltip
 						id="buddy"
@@ -114,21 +155,35 @@ export default class Movie extends Component {
 	}
 }
 const styles = StyleSheet.create({
-	posterHolder: {},
-	border: { border: '0.1em black solid' },
-	informationsHolder: {},
 	root: {
 		fontFamily: 'Barlow'
 	},
 	leftPanel: {
-		padding: 20,
-		border: '0.1em black solid'
+		padding: 20
+		// border: '0.1em black solid'
 	},
-	title: { fontSize: '2em' },
+	title: {
+		fontSize: '2em',
+		[Global.screenSize.smartphoneEm]: {
+			textAlign: 'center'
+		}
+	},
 	rightPanel: {
+		// backgroundColor: 'blue',
 		padding: 20,
-		// height: '100%',
-		border: '0.1em black solid'
+		height: '50vh'
+		// border: '0.1em black solid'
+	},
+	posterHolder: {},
+	// border: { border: '0.1em black solid' },
+	dateRuntime: {},
+	informationsHolder: {
+		[Global.screenSize.smartphoneEm]: {
+			textAlign: 'justify',
+			textJustify: 'inter-word',
+			'-moz-text-align-last': 'center',
+			textAlignLast: 'center'
+		}
 	},
 	showtimes: { padding: 20 }
 });

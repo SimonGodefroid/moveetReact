@@ -159,6 +159,11 @@ class Movies extends Component {
 
 	handlePageClick(data) {
 		let selected = data.selected + 1;
+		window.scroll({
+			top: 0,
+			left: 0,
+			behavior: 'smooth'
+		});
 		this.setState(
 			{ page: selected, forcePage: selected - 1 },
 			Api.getAllNowShowingMovies(
@@ -174,12 +179,12 @@ class Movies extends Component {
 				this.state.limit,
 				selected,
 				this.state.value
-			),
-			window.scroll({
-				top: 0,
-				left: 0,
-				behavior: 'smooth'
-			})
+			)
+			// window.scroll({
+			// 	top: 0,
+			// 	left: 0,
+			// 	behavior: 'smooth'
+			// })
 		);
 	}
 	renderTags() {
